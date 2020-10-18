@@ -20,6 +20,16 @@ namespace SWE1_MTCG_Tests
                 yield return new TestCaseData(new NormalElementalAttribute(),new FireElementalAttribute(),2);
             }
         }
+
+        private static IEnumerable<TestCaseData> GetTypeTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(new FireElementalAttribute(), EElementalAttributes.FIRE);
+                yield return new TestCaseData(new WaterElementalAttribute(), EElementalAttributes.WATER);
+                yield return new TestCaseData(new NormalElementalAttribute(), EElementalAttributes.NORMAL);
+            }
+        }
         
         [Test]
         [TestCaseSource(nameof(CheckEffectivenessTestCases))]
@@ -27,6 +37,13 @@ namespace SWE1_MTCG_Tests
         {
             //Assert
             Assert.AreEqual(result, firstAttribute.CheckEffectiveness(secondAttribute.GetType()));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetTypeTestCases))]
+        public void TestGetType(IElementalAttribute attribute, EElementalAttributes eAttribute)
+        {
+            Assert.AreEqual(eAttribute,attribute.GetType());
         }
     }
 }
