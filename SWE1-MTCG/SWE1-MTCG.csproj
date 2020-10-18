@@ -38,9 +38,14 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AElementalAttribute.cs" />
+        <Compile Include="EElementalAttributes.cs" />
+        <Compile Include="FireElementalAttribute.cs" />
         <Compile Include="IElementalAttribute.cs" />
+        <Compile Include="NormalElementalAttribute.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="WaterElementalAttribute.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
