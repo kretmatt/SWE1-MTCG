@@ -6,7 +6,7 @@ Program for trading and battling with and against each other in a magical card-g
 
 Further steps are explained in this section.
 
-##Elemental attributes
+## Elemental attributes
 
 Due to future plans involving the decorator pattern, elemental attributes are currently implemented as classes. There is also an elemental attribute enum called "EElementalAttributes". For unit testing I used TestCaseSource to avoid writing lots of lines just for 1 unit test. New elemental attributes can be easily added. A new attribute just needs to inherit from AElementalAttribute and it needs to define it's weaknesses and strengths.
 
