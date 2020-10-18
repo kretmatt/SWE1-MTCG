@@ -46,6 +46,12 @@
         <Compile Include="Tests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\SWE1-MTCG\SWE1-MTCG.csproj">
+        <Project>{932b1571-6b84-4ea6-b0f7-ab94a4fde0b9}</Project>
+        <Name>SWE1-MTCG</Name>
+      </ProjectReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
