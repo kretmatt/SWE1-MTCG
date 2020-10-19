@@ -46,11 +46,11 @@ namespace SWE1_MTCG_Tests
         {
             //arrange
             var mockCardAction = new Mock<ICardAction>();
-            mockCardAction.Setup(cardAction => cardAction.GetType()).Returns(mockElementalAttribute);
+            mockCardAction.Setup(cardAction => cardAction.GetElementalAttribute()).Returns(mockElementalAttribute);
             //act
-            EElementalAttributes tempType = mockCardAction.Object.GetType();
+            EElementalAttributes tempType = mockCardAction.Object.GetElementalAttribute();
             //assert
-            mockCardAction.Verify(cardAction=>cardAction.GetType());
+            mockCardAction.Verify(cardAction=>cardAction.GetElementalAttribute());
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace SWE1_MTCG_Tests
             var mockCardAction = new Mock<ICardAction>();
             EElementalAttributes setMockValue = EElementalAttributes.WATER;
             //act
-            mockCardAction.Object.SetType(setMockValue);
+            mockCardAction.Object.SetElementalAttribute(setMockValue);
             //assert
-            mockCardAction.Verify(cardAction=>cardAction.SetType(setMockValue));
+            mockCardAction.Verify(cardAction=>cardAction.SetElementalAttribute(setMockValue));
         }
 
         [Test]

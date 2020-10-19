@@ -1,20 +1,23 @@
 namespace SWE1_MTCG
 {
-    public class SpellCard:ICard
+    public class AreaCard:ICard
     {
         public string Name { get; set; }
         public double BaseDamage { get; set; }
         public IElementalAttribute ElementalAttribute { get; set; }
+        
+        public EAreaType AreaType { get; set; }
 
-        public SpellCard()
+        public AreaCard()
         {
             
         }
-        public SpellCard(string name, double baseDamage, IElementalAttribute elementalAttribute)
+        public AreaCard(string name, double baseDamage, IElementalAttribute elementalAttribute,EAreaType areaType)
         {
             Name = name;
             BaseDamage = baseDamage;
             ElementalAttribute = elementalAttribute;
+            AreaType = areaType;
         }
 
         public string PrintCard()
@@ -29,7 +32,14 @@ namespace SWE1_MTCG
 
         public ICardAction UseCard()
         {
-            return new AttackAction(BaseDamage,ElementalAttribute.GetElementalAttribute(),this);
+
+            switch (AreaType)
+            {
+                default:
+                    return new AreaAction(2, ElementalAttribute.GetElementalAttribute(), this,new ElementalArea(ElementalAttribute));
+                    break;
+            }
+            
         }
     }
 }

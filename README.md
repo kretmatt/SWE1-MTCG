@@ -49,7 +49,11 @@ Spell-Cards can be affected by Area-Cards.
 
 ### Area-Cards
 
-The fight between players takes place in an arena. The arena has an area. The area can be changed using Area-Cards. Areas influence Spell-Cards (e.g.: "Electric field" changes water based spells into electric ones).
+The fight between players takes place in an arena. The arena has an area. The area can be changed using Area-Cards. For example, areas can influence Spell-Cards (e.g.: "Electric field" changes water based spells into electric ones).
+
+#### Areas and AreaActions
+
+Due to implementing an interface called IArea, lots of different "areas" can be implemented. If a player wants to construct an area, a check is conducted (check whether the card played is an area card). Another action is implemented, which implements the IAreaAction interface. 
 
 ### Trap-Cards
 
