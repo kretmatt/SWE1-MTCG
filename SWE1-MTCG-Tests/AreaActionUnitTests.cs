@@ -20,7 +20,7 @@ namespace SWE1_MTCG_Tests
         {
             //arrange
             var mockAreaAction = new Mock<IAreaAction>();
-            mockAreaAction.Setup(areaAction => areaAction.ConstructArea()).Returns(areaAction);
+            mockAreaAction.Setup(areaAction => areaAction.ConstructArea()).Returns(areaAction.ConstructArea());
             //act
             IArea tempArea = mockAreaAction.Object.ConstructArea();
             //assert

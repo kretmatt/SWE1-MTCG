@@ -16,12 +16,12 @@ namespace SWE1_MTCG
             this.damage = damage;
         }
 
-        public EElementalAttributes GetType()
+        public EElementalAttributes GetElementalAttribute()
         {
             return elementalAttribute;
         }
 
-        public void SetType(EElementalAttributes elementalAttribute)
+        public void SetElementalAttribute(EElementalAttributes elementalAttribute)
         {
             this.elementalAttribute = elementalAttribute;
         }
