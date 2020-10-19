@@ -36,14 +36,14 @@ namespace SWE1_MTCG_Tests
         public void TestCheckEffectiveness(IElementalAttribute firstAttribute,IElementalAttribute secondAttribute,double result)
         {
             //Assert
-            Assert.AreEqual(result, firstAttribute.CheckEffectiveness(secondAttribute.GetType()));
+            Assert.AreEqual(result, firstAttribute.CheckEffectiveness(secondAttribute.GetElementalAttribute()));
         }
 
         [Test]
         [TestCaseSource(nameof(GetTypeTestCases))]
         public void TestGetType(IElementalAttribute attribute, EElementalAttributes eAttribute)
         {
-            Assert.AreEqual(eAttribute,attribute.GetType());
+            Assert.AreEqual(eAttribute,attribute.GetElementalAttribute());
         }
     }
 }
