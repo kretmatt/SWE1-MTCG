@@ -59,6 +59,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="CardActionUnitTests.cs" />
         <Compile Include="CardUnitTests.cs" />
         <Compile Include="ElementalAttributesUnitTests.cs" />
         <Compile Include="Tests.cs" />
