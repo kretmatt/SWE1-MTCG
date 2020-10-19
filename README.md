@@ -54,3 +54,7 @@ The fight between players takes place in an arena. The arena has an area. The ar
 ### Trap-Cards
 
 Traps can be used to inflict major damage in the next round. You are probably going to lose the current round, but the payoff should make it worthwhile.
+
+### Card-Actions
+
+Due to future plans (area cards, trap cards) I need CardActions (attack, area, trap). Trap and area actions are special, because they influence the arena. Attacks are passed through an area (and are possibly influenced) to "reach" the enemy.
