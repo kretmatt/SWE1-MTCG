@@ -18,7 +18,7 @@ namespace SWE1_MTCG
             return effectivenessModifier;
         }
 
-        public EElementalAttributes GetType()
+        public EElementalAttributes GetElementalAttribute()
         {
             return type;
         }

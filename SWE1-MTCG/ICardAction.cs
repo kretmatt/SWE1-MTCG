@@ -5,8 +5,8 @@ namespace SWE1_MTCG
         double GetDamage();
         void SetDamage(double damage);
         
-        EElementalAttributes GetType();
-        void SetType(EElementalAttributes elementalAttribute);
+        EElementalAttributes GetElementalAttribute();
+        void SetElementalAttribute(EElementalAttributes elementalAttribute);
 
         ICard Attacker();
     }

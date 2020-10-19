@@ -35,13 +35,13 @@ namespace SWE1_MTCG
         {
             double receivedDamage = cardAction.GetDamage();
             if (cardAction.Attacker().GetType() != typeof(MonsterCard))
-                receivedDamage *= ElementalAttribute.CheckEffectiveness(cardAction.GetType());
+                receivedDamage *= ElementalAttribute.CheckEffectiveness(cardAction.GetElementalAttribute());
             return receivedDamage-ArmorPoints;
         }
 
         public ICardAction UseCard()
         {
-            return new AttackAction(BaseDamage*Strength,ElementalAttribute.GetType(),this);
+            return new AttackAction(BaseDamage*Strength,ElementalAttribute.GetElementalAttribute(),this);
         }
     }
 }
