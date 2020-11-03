@@ -8,7 +8,7 @@ Further steps are explained in this section.
 
 ## Class diagram
 
-
+![Class diagram of the project](./mtcg/mtcg.svg)
 
 ## Elemental attributes
 
