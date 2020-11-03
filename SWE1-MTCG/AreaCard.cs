@@ -32,14 +32,13 @@ namespace SWE1_MTCG
 
         public ICardAction UseCard()
         {
-
             switch (AreaType)
             {
                 default:
-                    return new AreaAction(2, ElementalAttribute.GetElementalAttribute(), this,new ElementalArea(ElementalAttribute));
+                    return new AreaAction(2, ElementalAttribute.GetElementalAttribute(), this,
+                        new ElementalArea(ElementalAttribute));
                     break;
             }
-            
         }
     }
 }

@@ -65,6 +65,8 @@
         <Compile Include="CardUnitTests.cs" />
         <Compile Include="ElementalAttributesUnitTests.cs" />
         <Compile Include="MonsterCardUnitTests.cs" />
+        <Compile Include="PackageFactoryUnitTests.cs" />
+        <Compile Include="PackageUnitTests.cs" />
         <Compile Include="Tests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
