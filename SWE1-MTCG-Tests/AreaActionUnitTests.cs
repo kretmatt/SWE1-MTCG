@@ -14,7 +14,7 @@ namespace SWE1_MTCG_Tests
         {
             areaAction=new AreaAction(2, EElementalAttributes.WATER, new AreaCard(), new ElementalArea(new WaterElementalAttribute()));
         }
-
+        
         [Test]
         public void ConstructAreaMock()
         {
