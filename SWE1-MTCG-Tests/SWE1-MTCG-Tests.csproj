@@ -61,6 +61,7 @@
     <ItemGroup>
         <Compile Include="AreaActionUnitTests.cs" />
         <Compile Include="AreaUnitTests.cs" />
+        <Compile Include="ArenaUnitTests.cs" />
         <Compile Include="CardActionUnitTests.cs" />
         <Compile Include="CardUnitTests.cs" />
         <Compile Include="ElementalAttributesUnitTests.cs" />
