@@ -6,6 +6,10 @@ Program for trading and battling with and against each other in a magical card-g
 
 Further steps are explained in this section.
 
+## Class diagram
+
+
+
 ## Elemental attributes
 
 Due to future plans involving the decorator pattern, elemental attributes are currently implemented as classes. There is also an elemental attribute enum called "EElementalAttributes". For unit testing I used TestCaseSource to avoid writing lots of lines just for 1 unit test. New elemental attributes can be easily added. A new attribute just needs to inherit from AElementalAttribute and it needs to define it's weaknesses and strengths.
@@ -38,6 +42,8 @@ Monsters are not that special. Although there is a mechanic, which makes certain
 * Strength
 
 The immunity/susceptibility is implemented using inheritance. The elemental attribute isn't used in monster-only-fights.
+
+To implement monster types with different behavior in ReceiveDamage the method is virtual. The monster types are implemented with inheritance (according to task).  I am not really sure how to solve the insta-kill mechanic with inheritance alone. Currently I am taking advantage of the fact that ReceiveDamage can't return negative values due to my implementation. As soon as a negative value is detected, the opponent wins.
 
 ### Spell-Cards
 

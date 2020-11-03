@@ -31,12 +31,12 @@ namespace SWE1_MTCG
             throw new System.NotImplementedException();
         }
 
-        public double ReceiveDamage(ICardAction cardAction)
+        public virtual double ReceiveDamage(ICardAction cardAction)
         {
             double receivedDamage = cardAction.GetDamage();
             if (cardAction.Attacker().GetType() != typeof(MonsterCard))
                 receivedDamage *= ElementalAttribute.CheckEffectiveness(cardAction.GetElementalAttribute());
-            return receivedDamage-ArmorPoints;
+            return receivedDamage-ArmorPoints>=0 ? receivedDamage-ArmorPoints:0;
         }
 
         public ICardAction UseCard()
