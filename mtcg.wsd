@@ -1,0 +1,176 @@
+@startuml
+
+interface ICard{
+    + string PrintCard()
+    + double ReceiveDamage(ICardAction cardAction)
+    + ICardAction UseCard()
+}
+
+ICard ..> ICardAction
+
+
+class AreaCard implements ICard{
+    + string Name {get;set;}
+    + double BaseDamage {get;set;}
+    + IElementalAttribute ElementalAttribute {get;set;}
+    + EAreaType AreaType {get;set;}
+}
+
+AreaCard o-- IElementalAttribute
+
+class MonsterCard implements ICard{
+    + string Name {get;set;}
+    + double BaseDamage {get;set;}
+    + IElementalAttribute ElementalAttribute {get;set;}
+    + double ArmorPoints {get;set;}
+    + double Strength {get;set;}
+
+    + virtual double ReceiveDamage(ICardAction cardAction)
+}
+
+MonsterCard o-- IElementalAttribute
+
+class Goblin extends MonsterCard{
+    + override double ReceiveDamage(ICardAction cardAction)
+}
+class Dragon extends MonsterCard{
+    + override double ReceiveDamage(ICardAction cardAction)
+}
+
+class SpellCard implements ICard{
+    + string Name {get;set;}
+    + double BaseDamage {get;set;}
+    + IElementalAttribute ElementalAttribute {get;set;}
+}
+
+SpellCard o-- IElementalAttribute
+
+interface IArena{
+    + ICard DetermineVictor(ICard attacker, ICard defender)
+}
+
+IArena ..> ICard
+
+class Arena implements IArena{
+    - IArea area
+}
+
+Arena o-- IArea
+
+enum EElementalAttributes{
+    FIRE,
+    WATER,
+    NORMAL
+}
+
+interface IElementalAttribute{
+    + double CheckEffectiveness(EElementalAttributes attribute)
+    + EElementalAttributes GetElementalAttribute()
+}
+
+abstract class AElementalAttribute implements IElementalAttribute{
+    # List<EElementalAttributes> weaknesses
+    # List<EElementalAttributes> strengths
+    # EElementalAttributes type
+}
+class FireElementalAttribute extends AElementalAttribute{
+}
+class WaterElementalAttribute extends AElementalAttribute{
+}
+class NormalElementalAttribute extends AElementalAttribute{
+}
+
+
+interface IPackageFactory{
+    + IPackage CreatePackage()
+    + IPackage CreateHighRarityPackage()
+}
+IPackageFactory ..> IPackage
+class StandardPackageFactory implements IPackageFactory{
+}
+interface IPackage{
+    + void AddCardToPackage(ICard card)
+    + void AddCardRange(IEnumerable<ICard> cards)
+    + IEnumerable<ICard> OpenPackage()
+}
+IPackage ..> ICard
+class StandardPackage implements IPackage{
+    - List<ICard> cards
+}
+StandardPackage o-- ICard
+
+class User{
+    + int Coins {get;set;}
+    + List<ICard> CardStack {get;set;}
+    + List<ICard> CardDeck {get;set;}
+    + string Name {get;set;}
+    + int ELOScore {get;set;}
+    - string password
+}
+User o-- ICard
+
+class Client{
+    - User user
+
+    + void BuyPackage()
+    + void Battle()
+    + void SetDeck()
+    + void OfferCardForTrading()
+    + void WithdrawTradeOffer()
+    + void Login()
+    + void Register()
+    + void Logout()
+}
+
+Client o-- User
+class BattleSystem{
+    + Arena Arena {get;set;}
+    + User Challenger {get;private set;}
+    + User Acceptor {get; private set;}
+
+    + void PrepareForBattle(User challenger, User acceptor, Arena arena)
+    + void ConductBattleProcess()
+    - void CalculateNewRanking(User user, bool victor)
+    - void CleanUpBattleSystem()
+}
+BattleSystem o-- User
+BattleSystem o-- IArena
+interface ICardAction{
+    + double GetDamage()
+    + void SetDamage(double damage)
+    + EElementalAttributes GetElementalAttribute()
+    + void SetElementalAttribute(EElementalAttributes elementalAttribute)
+    + ICard Attacker()
+}
+abstract class ACardAction implements ICardAction{
+    # double damage
+    # EElementalAttributes elementalAttribute
+    # ICard attacker
+}
+ACardAction o-- ICard
+
+class AttackAction extends ACardAction{
+
+}
+
+interface IAreaAction{
+    + IArea ConstructArea()
+}
+IAreaAction ..> IArea
+class AreaAction extends ACardAction, IAreaAction{
+    - IArea area
+}
+
+enum EAreaType{
+    ELEMENTAL
+}
+
+interface IArea{
+    + ICardAction InfluenceBattle(ICardAction)
+}
+IArea ..> ICardAction
+class ElementalArea implements IArea{
+
+}
+
+@enduml
