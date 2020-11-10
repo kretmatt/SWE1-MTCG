@@ -1,7 +1,4 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=55703cf9_002D6c25_002D45e0_002D8d73_002De4bd713c7ee3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::9E3AF961-4896-4B5D-93CF-8DAFFA83867D::.NETFramework,Version=v4.8::SWE1_MTCG_Tests.Tests.Test1&lt;/TestId&gt;
-    &lt;TestId&gt;NUnit3x::9E3AF961-4896-4B5D-93CF-8DAFFA83867D::.NETFramework,Version=v4.8::SWE1_MTCG_Tests.ElementalAttributesUnitTests.TestCheckEffectiveness&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+  &lt;Project Location="/home/matthias/Desktop/FH/SWE/SWE1-MTCG/SWE1-MTCG-Tests" Presentation="&amp;lt;SWE1-MTCG-Tests&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -42,6 +42,7 @@
         <Compile Include="AElementalAttribute.cs" />
         <Compile Include="AreaAction.cs" />
         <Compile Include="AreaCard.cs" />
+        <Compile Include="Arena.cs" />
         <Compile Include="AttackAction.cs" />
         <Compile Include="Dragon.cs" />
         <Compile Include="EAreaType.cs" />
@@ -52,6 +53,7 @@
         <Compile Include="Goblin.cs" />
         <Compile Include="IArea.cs" />
         <Compile Include="IAreaAction.cs" />
+        <Compile Include="IArena.cs" />
         <Compile Include="ICard.cs" />
         <Compile Include="ICardAction.cs" />
         <Compile Include="IElementalAttribute.cs" />

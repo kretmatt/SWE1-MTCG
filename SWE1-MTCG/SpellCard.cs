@@ -24,6 +24,9 @@ namespace SWE1_MTCG
 
         public double ReceiveDamage(ICardAction cardAction)
         {
+            if (cardAction.Attacker().GetType() == typeof(SpellCard))
+                return ElementalAttribute.CheckEffectiveness(cardAction.GetElementalAttribute());
+            
             return cardAction.GetDamage() * ElementalAttribute.CheckEffectiveness(cardAction.GetElementalAttribute());
         }
 
