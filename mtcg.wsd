@@ -53,6 +53,7 @@ IArena ..> ICard
 
 class Arena implements IArena{
     - IArea area
+    - ICard DetermineSpellBattleVictor(ICardAction defenderAction, ICardAction attackerAction)
 }
 
 Arena o-- IArea
@@ -173,4 +174,25 @@ class ElementalArea implements IArea{
 
 }
 
+enum ECardType{
+    MONSTER,
+    SPELL,
+    AREA
+}
+
+class TradeOffer{
+    + ICard OfferedCard{get;set;}
+    + int MinDamageRequirement{get;set;}
+    + EElementalAttributes ElementRequirement{get;set;}
+    + ECardType CardTypeRequirement {get;set;}
+
+}
+
+class TradingPost{
+    + List<TradeOffer> TradeOffers{get;private set;}
+    + void OfferCardForTrade(ICard card, int minDamageRequirement, EElementalAttributes elementalRequirement, ECardType cardTypeRequirement)
+    + ICard TradeCard(TradeOffer tradeOffer, ICard offeredCard)
+}
+
+TradingPost o-- TradeOffer
 @enduml
