@@ -104,9 +104,10 @@ class User{
     + int Coins {get;set;}
     + List<ICard> CardStack {get;set;}
     + List<ICard> CardDeck {get;set;}
+    + List<ICard> CurrentlyUnavailableCards{get;set;}
     + string Name {get;set;}
     + int ELOScore {get;set;}
-    - string password
+    + string Password {get;set;}
 }
 User o-- ICard
 
