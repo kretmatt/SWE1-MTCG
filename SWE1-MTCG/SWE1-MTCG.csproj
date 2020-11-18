@@ -69,6 +69,7 @@
         <Compile Include="SpellCard.cs" />
         <Compile Include="StandardPackage.cs" />
         <Compile Include="StandardPackageFactory.cs" />
+        <Compile Include="User.cs" />
         <Compile Include="WaterElementalAttribute.cs" />
         <Compile Include="Wizzard.cs" />
     </ItemGroup>
