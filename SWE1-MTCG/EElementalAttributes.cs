@@ -4,6 +4,8 @@ namespace SWE1_MTCG
     {
         FIRE,
         WATER,
-        NORMAL
+        NORMAL,
+        DARKNESS,
+        LIGHT
     }
 }

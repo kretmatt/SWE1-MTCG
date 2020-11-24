@@ -18,6 +18,8 @@ namespace SWE1_MTCG_Tests
                 yield return new TestCaseData(new WaterElementalAttribute(), new NormalElementalAttribute(),2);
                 yield return new TestCaseData(new NormalElementalAttribute(), new WaterElementalAttribute(),0.5);
                 yield return new TestCaseData(new NormalElementalAttribute(),new FireElementalAttribute(),2);
+                yield return new TestCaseData(new LightElementalAttribute(),new DarknessElementalAttribute(),2);
+                yield return new TestCaseData(new DarknessElementalAttribute(),new LightElementalAttribute(),2);
             }
         }
 
