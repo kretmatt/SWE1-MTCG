@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using Npgsql;
 
@@ -32,14 +34,24 @@ namespace SWE1_MTCG
             return affectedRows;
         }
 
-        public INpgsqlDataReader QueryDatabase(INpgsqlCommand npgsqlCommand)
+        public List<object[]> QueryDatabase(INpgsqlCommand npgsqlCommand)
         {
+            List<object[]> results = new List<object[]>();
             npgsqlCommand.Connection = _npgsqlConnection;
             INpgsqlDataReader resultReader;
             _npgsqlConnection.Open();
             resultReader = npgsqlCommand.ExecuteReader();
+            while (resultReader.Read())
+            {
+              object[] row = new object[resultReader.FieldCount()];
+              for (int i = 0; i < row.Length; i++)
+              {
+                  row[i] = resultReader.GetValue(i);
+              }
+              results.Add(row);
+            }
             _npgsqlConnection.Close();
-            return resultReader;
+            return results;
         }
     }
 }

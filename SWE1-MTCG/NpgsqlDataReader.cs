@@ -1,3 +1,5 @@
+using System;
+
 namespace SWE1_MTCG
 {
     public class NpgsqlDataReader:INpgsqlDataReader
@@ -9,6 +11,7 @@ namespace SWE1_MTCG
             _npgsqlDataReader = npgsqlDataReader;
         }
 
+        public int FieldCount() => _npgsqlDataReader.FieldCount;
         public bool Read() => _npgsqlDataReader.Read();
         public object GetValue(int i) => _npgsqlDataReader.GetValue(i);
     }

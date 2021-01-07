@@ -87,14 +87,19 @@
         <Compile Include="ACard.cs" />
         <Compile Include="AreaCard.cs" />
         <Compile Include="BattleHistory.cs" />
+        <Compile Include="BattleHistoryRepository.cs" />
         <Compile Include="EBattleResult.cs" />
         <Compile Include="EElementalType.cs" />
         <Compile Include="EMonsterType.cs" />
         <Compile Include="EServantClass.cs" />
         <Compile Include="ETradingDealType.cs" />
+        <Compile Include="IBattleHistoryRepository.cs" />
         <Compile Include="IMTCGDatabaseConnection.cs" />
         <Compile Include="INpgsqlCommand.cs" />
         <Compile Include="INpgsqlDataReader.cs" />
+        <Compile Include="ISessionRepository.cs" />
+        <Compile Include="IUserRepository.cs" />
+        <Compile Include="IUserStatsRepository.cs" />
         <Compile Include="MonsterCard.cs" />
         <Compile Include="MTCGDatabaseConnection.cs" />
         <Compile Include="NpgsqlDataReader.cs" />
@@ -103,11 +108,14 @@
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="ServantCard.cs" />
+        <Compile Include="SessionRepository.cs" />
         <Compile Include="SpellCard.cs" />
         <Compile Include="TradingDeal.cs" />
         <Compile Include="TrapCard.cs" />
         <Compile Include="User.cs" />
+        <Compile Include="UserRepository.cs" />
         <Compile Include="UserStats.cs" />
+        <Compile Include="UserStatsRepository.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
