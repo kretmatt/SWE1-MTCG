@@ -4,5 +4,7 @@ namespace SWE1_MTCG
     {
         bool Read();
         object GetValue(int i);
+
+        int FieldCount();
     }
 }

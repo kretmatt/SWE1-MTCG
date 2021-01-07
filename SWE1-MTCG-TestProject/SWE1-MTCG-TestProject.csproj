@@ -97,10 +97,14 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="BattleHistoryRepositoryTests.cs" />
         <Compile Include="MTCGDatabaseConnectionTests.cs" />
         <Compile Include="NpgsqlCommandTests.cs" />
         <Compile Include="NpgsqlDataReaderTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="SessionRepositoryTests.cs" />
+        <Compile Include="UserRepositoryTests.cs" />
+        <Compile Include="UserStatsRepositoryTests.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\SWE1-MTCG\SWE1-MTCG.csproj">
