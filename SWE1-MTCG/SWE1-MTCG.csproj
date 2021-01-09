@@ -88,6 +88,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AAffinityChart.cs" />
         <Compile Include="ACard.cs" />
         <Compile Include="AreaCard.cs" />
         <Compile Include="BattleHistory.cs" />
@@ -95,11 +96,15 @@
         <Compile Include="CardRepository.cs" />
         <Compile Include="EBattleResult.cs" />
         <Compile Include="EElementalType.cs" />
+        <Compile Include="ElectricAffinityChart.cs" />
         <Compile Include="EMonsterType.cs" />
         <Compile Include="EServantClass.cs" />
         <Compile Include="ECardType.cs" />
+        <Compile Include="FireAffinityChart.cs" />
+        <Compile Include="GroundAffinityChart.cs" />
         <Compile Include="IBattleHistoryRepository.cs" />
         <Compile Include="ICardRepository.cs" />
+        <Compile Include="IAffinityChart.cs" />
         <Compile Include="IMTCGDatabaseConnection.cs" />
         <Compile Include="INpgsqlCommand.cs" />
         <Compile Include="INpgsqlDataReader.cs" />
@@ -110,6 +115,7 @@
         <Compile Include="IUserStatsRepository.cs" />
         <Compile Include="MonsterCard.cs" />
         <Compile Include="MTCGDatabaseConnection.cs" />
+        <Compile Include="NormalAffinityChart.cs" />
         <Compile Include="NpgsqlDataReader.cs" />
         <Compile Include="NpsqlCommand.cs" />
         <Compile Include="Package.cs" />
@@ -126,6 +132,7 @@
         <Compile Include="UserRepository.cs" />
         <Compile Include="UserStats.cs" />
         <Compile Include="UserStatsRepository.cs" />
+        <Compile Include="WaterAffinityChart.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

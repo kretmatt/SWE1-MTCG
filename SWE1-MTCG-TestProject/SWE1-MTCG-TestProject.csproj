@@ -99,6 +99,7 @@
     <ItemGroup>
         <Compile Include="BattleHistoryRepositoryTests.cs" />
         <Compile Include="CardRepositoryTests.cs" />
+        <Compile Include="ElementalAffinitiesTests.cs" />
         <Compile Include="MTCGDatabaseConnectionTests.cs" />
         <Compile Include="NpgsqlCommandTests.cs" />
         <Compile Include="NpgsqlDataReaderTests.cs" />
