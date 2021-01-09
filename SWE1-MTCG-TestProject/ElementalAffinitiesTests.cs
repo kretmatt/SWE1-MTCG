@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using SWE1_MTCG;
+using SWE1_MTCG.ElementalAffinities;
+using SWE1_MTCG.Enums;
 
 namespace SWE1_MTCG_TestProject
 {
