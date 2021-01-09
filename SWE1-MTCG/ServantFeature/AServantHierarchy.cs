@@ -12,9 +12,9 @@ namespace SWE1_MTCG.ServantFeature
         {
             double attackModifier=1;
             if (servantWeaknesses.Contains(servantClass))
-                attackModifier *= 2;
-            if (servantStrengths.Contains(servantClass))
                 attackModifier *= 0.5;
+            if (servantStrengths.Contains(servantClass))
+                attackModifier *= 2;
             return attackModifier;
         }
     }

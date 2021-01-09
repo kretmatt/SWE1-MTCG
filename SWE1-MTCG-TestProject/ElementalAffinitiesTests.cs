@@ -14,35 +14,35 @@ namespace SWE1_MTCG_TestProject
         {
             get
             {
-                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.ELECTRIC,2);
-                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.NORMAL,2);
-                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.FIRE,0.5);
-                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.GROUND,0.5);
+                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.ELECTRIC,0.5);
+                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.NORMAL,0.5);
+                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.FIRE,2);
+                yield return new TestCaseData(new WaterAffinityChart(), EElementalType.GROUND,2);
                 yield return new TestCaseData(new WaterAffinityChart(), EElementalType.WATER,1);
                 
-                yield return new TestCaseData(new NormalAffinityChart(), EElementalType.FIRE,2);
+                yield return new TestCaseData(new NormalAffinityChart(), EElementalType.FIRE,0.5);
                 yield return new TestCaseData(new NormalAffinityChart(), EElementalType.NORMAL,1);
                 yield return new TestCaseData(new NormalAffinityChart(),EElementalType.ELECTRIC,1);
-                yield return new TestCaseData(new NormalAffinityChart(), EElementalType.WATER,0.5);
+                yield return new TestCaseData(new NormalAffinityChart(), EElementalType.WATER,2);
                 yield return new TestCaseData(new NormalAffinityChart(), EElementalType.GROUND,1);
                 
                 yield return new TestCaseData(new FireAffinityChart(), EElementalType.FIRE,1);
-                yield return new TestCaseData(new FireAffinityChart(), EElementalType.NORMAL,0.5);
+                yield return new TestCaseData(new FireAffinityChart(), EElementalType.NORMAL,2);
                 yield return new TestCaseData(new FireAffinityChart(), EElementalType.ELECTRIC,1);
-                yield return new TestCaseData(new FireAffinityChart(), EElementalType.WATER,2);
+                yield return new TestCaseData(new FireAffinityChart(), EElementalType.WATER,0.5);
                 yield return new TestCaseData(new FireAffinityChart(), EElementalType.GROUND,1);
                 
                 yield return new TestCaseData(new GroundAffinityChart(), EElementalType.FIRE,1);
                 yield return new TestCaseData(new GroundAffinityChart(), EElementalType.NORMAL,1);
-                yield return new TestCaseData(new GroundAffinityChart(), EElementalType.ELECTRIC,0.5);
-                yield return new TestCaseData(new GroundAffinityChart(), EElementalType.WATER,2);
+                yield return new TestCaseData(new GroundAffinityChart(), EElementalType.ELECTRIC,2);
+                yield return new TestCaseData(new GroundAffinityChart(), EElementalType.WATER,0.5);
                 yield return new TestCaseData(new GroundAffinityChart(), EElementalType.GROUND,1);
                 
                 yield return new TestCaseData(new ElectricAffinityChart(), EElementalType.FIRE,1);
                 yield return new TestCaseData(new ElectricAffinityChart(), EElementalType.NORMAL,1);
                 yield return new TestCaseData(new ElectricAffinityChart(), EElementalType.ELECTRIC,1);
-                yield return new TestCaseData(new ElectricAffinityChart(), EElementalType.WATER,0.5);
-                yield return new TestCaseData(new ElectricAffinityChart(), EElementalType.GROUND,2);
+                yield return new TestCaseData(new ElectricAffinityChart(), EElementalType.WATER,2);
+                yield return new TestCaseData(new ElectricAffinityChart(), EElementalType.GROUND,0.5);
             }
         }
 

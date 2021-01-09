@@ -12,9 +12,9 @@ namespace SWE1_MTCG.ElementalAffinities
         {
             double attackModifier = 1;
             if (elementalWeaknesses.Contains(elementalType))
-                attackModifier *= 2;
-            if (elementalStrengths.Contains(elementalType))
                 attackModifier *= 0.5;
+            if (elementalStrengths.Contains(elementalType))
+                attackModifier *= 2;
             return attackModifier;
         }
     }
