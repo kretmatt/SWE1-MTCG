@@ -23,13 +23,37 @@ namespace SWE1_MTCG_TestProject
              {
                  Id=1,
                  Bio = "Test Bio",
-                 Username = "kretmatt"
+                 Username = "kretmatt",
+                 Coins = 20,
+                 CardDeck = new List<ACard>(),
+                 CardStack = new List<ACard>
+                 {
+                     new ServantCard
+                     {
+                         Id=1
+                     },
+                     new AreaCard
+                     {
+                         Id=2
+                     },
+                     new TrapCard
+                     {
+                         Id=3
+                     },
+                     new SpellCard
+                     {
+                         Id=3
+                     }
+                 }
              },
              new User
              {
                  Id=2,
                  Bio = "Test Bio 2 ",
-                 Username = "testuser"
+                 Username = "testuser",
+                 Coins = 0,
+                 CardDeck = new List<ACard>(),
+                 CardStack = new List<ACard>()
              }
          };
          mockUserStats = new List<UserStats>();
@@ -169,9 +193,88 @@ namespace SWE1_MTCG_TestProject
             Assert.AreEqual(mockUsers[0],firstUser);
             Assert.AreEqual(mockUsers[1],secondUser);
         }
+        [Test]
+        public void SetCardDeckMock()
+        {
+            //arrange
+            mockRepository.Setup(mr => mr.SetCardDeck(It.IsAny<List<ACard>>(), It.IsAny<User>())).Returns(
+                (List<ACard> cards, User user) =>
+                {
+                    if (user == null)
+                        return 0;
 
+                    foreach (ACard card in cards)
+                    {
+                        if ((!user.CardStack.Exists(c => c.Id == card.Id)) ||
+                            (user.CardStack.Count(c => c.Id == card.Id) < cards.Count(c => c.Id == card.Id)))
+                            return 0;
+                    }
+                    int affectedRows = user.CardDeck.Count;
+                    user.CardDeck = new List<ACard>();
+                    foreach (ACard card in cards)
+                    {
+                        user.CardDeck.Add(card);
+                        affectedRows += 1;
+                    }
+                    return affectedRows;
+                });
+            //act
+            int affectedRowsFirstUser = mockRepository.Object.SetCardDeck(mockUsers[0].CardStack, mockUsers[0]);
+            int affectedRowsSecondUser = mockRepository.Object.SetCardDeck(mockUsers[0].CardStack, mockUsers[1]);
+            //assert
+            mockRepository.Verify(mr=>mr.SetCardDeck(mockUsers[0].CardStack, mockUsers[0]));
+            mockRepository.Verify(mr=>mr.SetCardDeck(mockUsers[0].CardStack, mockUsers[1]));
+            Assert.IsTrue(affectedRowsFirstUser>=4);
+            Assert.IsTrue(affectedRowsSecondUser==0);
+        }
+        [Test]
+        public void DeductCoinsMock()
+        {
+            //arrange
+            mockRepository.Setup(mr => mr.CoinsDeductible(It.IsAny<int>(), It.IsAny<User>())).Returns(
+                (int coinAmount,User user) => user!=null && coinAmount>=0 && user.Coins>=coinAmount);
+            mockRepository.Setup(mr => mr.DeductCoins(It.IsAny<int>(), It.IsAny<User>())).Returns(
+                (int coinAmount, User user) =>
+                {
+                    if (!mockRepository.Object.CoinsDeductible(coinAmount,user))
+                        return 0;
 
+                    user.Coins -= coinAmount;
+                    
+                    return 1;
+                });
+            //act
+            int affectedRowsFirstUser = mockRepository.Object.DeductCoins(4, mockUsers[0]);
+            int affectedRowsSecondUser = mockRepository.Object.DeductCoins(10, mockUsers[1]);
+            //assert
+            mockRepository.Verify(mr=>mr.CoinsDeductible(4,mockUsers[0]));
+            mockRepository.Verify(mr=>mr.CoinsDeductible(10,mockUsers[1]));
+            mockRepository.Verify(mr=>mr.DeductCoins(4,mockUsers[0]));
+            mockRepository.Verify(mr=>mr.DeductCoins(10,mockUsers[1]));
+            Assert.AreEqual(1,affectedRowsFirstUser);
+            Assert.AreEqual(0,affectedRowsSecondUser);
+        }
+        [Test]
+        public void CoinsDeductibleMock()
+        {
+            //arrange
+            mockRepository.Setup(mr => mr.CoinsDeductible(It.IsAny<int>(), It.IsAny<User>())).Returns(
+                (int coinAmount,User user) => user!=null && coinAmount>=0 && user.Coins>=coinAmount);
+            //act
+            bool coinsDeductibleFirstUser = mockRepository.Object.CoinsDeductible(10, mockUsers[0]);
+            bool coinsDeductibleSecondUser = mockRepository.Object.CoinsDeductible(3, mockUsers[1]);
+            //assert
+            mockRepository.Verify(mr=>mr.CoinsDeductible(10,mockUsers[0]));
+            mockRepository.Verify(mr=>mr.CoinsDeductible(3,mockUsers[1]));
+            Assert.IsTrue(coinsDeductibleFirstUser);
+            Assert.IsFalse(coinsDeductibleSecondUser);
+        }
+        
+        
 
+        
+
+        
 
     }
 }

@@ -1,6 +1,6 @@
 namespace SWE1_MTCG
 {
-    public enum ETradingDealType
+    public enum ECardType
     {
         MONSTER,
         AREA,
