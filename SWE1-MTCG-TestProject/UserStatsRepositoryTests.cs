@@ -3,6 +3,9 @@ using System.Linq;
 using Moq;
 using NUnit.Framework;
 using SWE1_MTCG;
+using SWE1_MTCG.DBFeature;
+using SWE1_MTCG.DTOs;
+using SWE1_MTCG.Enums;
 
 namespace SWE1_MTCG_TestProject
 {

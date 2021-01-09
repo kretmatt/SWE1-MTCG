@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using SWE1_MTCG;
 using Moq;
+using SWE1_MTCG.DBFeature;
+
 namespace SWE1_MTCG_TestProject
 {
     [TestFixture]

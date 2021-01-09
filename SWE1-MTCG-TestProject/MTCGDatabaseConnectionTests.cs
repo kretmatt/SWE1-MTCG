@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using SWE1_MTCG;
+using SWE1_MTCG.DBFeature;
 
 namespace SWE1_MTCG_TestProject
 {
