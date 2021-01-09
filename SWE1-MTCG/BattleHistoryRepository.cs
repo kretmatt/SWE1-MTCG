@@ -12,6 +12,7 @@ namespace SWE1_MTCG
         {
             _mtcgDatabaseConnection=MTCGDatabaseConnection.ReturnMTCGDatabaseConnection();
             _userRepository=new UserRepository();
+            
         }
 
         public BattleHistory ConvertToBattleHistory(object[] row, User user)

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SWE1_MTCG
 {
     public interface IUserRepository
@@ -8,5 +10,11 @@ namespace SWE1_MTCG
         int Delete(int id);
         User Read(int id);
         User Read(string username);
+
+        int SetCardDeck(List<ACard> cards, User user);
+
+        int DeductCoins(int coinAmount, User user);
+
+        bool CoinsDeductible(int coinAmount, User user);
     }
 }

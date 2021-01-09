@@ -98,11 +98,14 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="BattleHistoryRepositoryTests.cs" />
+        <Compile Include="CardRepositoryTests.cs" />
         <Compile Include="MTCGDatabaseConnectionTests.cs" />
         <Compile Include="NpgsqlCommandTests.cs" />
         <Compile Include="NpgsqlDataReaderTests.cs" />
+        <Compile Include="PackageRepositoryTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="SessionRepositoryTests.cs" />
+        <Compile Include="TradingDealRepositoryTests.cs" />
         <Compile Include="UserRepositoryTests.cs" />
         <Compile Include="UserStatsRepositoryTests.cs" />
     </ItemGroup>

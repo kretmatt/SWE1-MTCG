@@ -6,10 +6,5 @@ namespace SWE1_MTCG
     {
         public int Id { get; set; }
         public List<ACard> Cards { get; set; }
-
-        public Package(List<ACard> cards)
-        {
-            Cards = cards;
-        }
     }
 }
