@@ -6,54 +6,21 @@ using SWE1_MTCG.DBFeature;
 
 namespace SWE1_MTCG.WebService
 {
-    public class SessionEndpointHandler:IResourceEndpointHandler
+    public class SessionEndpointHandler:AEndpointHandler
     {
         private ISessionRepository _sessionRepository;
-        private List<RouteAction> RouteActions;
-        private const string urlBase="/sessions";
         public SessionEndpointHandler(ISessionRepository sessionRepository)
         {
+            urlBase = "/sessions";
             _sessionRepository = sessionRepository;
             RouteActions = new List<RouteAction>
             {
                 new RouteAction(
                     LoginHandler,
-                    String.Format(@"^\{0}$",urlBase),
+                    $@"^\{urlBase}$",
                     EHTTPVerbs.POST
                 )
             };
-        }
-        
-        public bool CheckResponsibility(RequestContext requestContext)
-        {
-            return requestContext.URL.StartsWith(String.Format("{0}/",urlBase))||requestContext.URL==urlBase;
-        }
-
-        private RouteAction DetermineRouteAction(RequestContext requestContext)
-        {
-            RouteAction endpointAction=null;
-            RouteActions.ForEach(ra =>
-            {
-                Regex re = new Regex(ra.PathRegex);
-                
-                if (re.IsMatch(requestContext.URL)&&ra.RequestType==requestContext.Type)
-                    endpointAction = ra;
-            });
-            return endpointAction;
-        }
-
-        public ResponseContext HandleRequest(RequestContext requestContext)
-        {
-            RouteAction routeAction = DetermineRouteAction(requestContext);
-            ResponseContext responseContext;
-            if (routeAction != null)
-                responseContext=routeAction.PathAction(requestContext);
-            else
-            {
-                responseContext = ResponseContext.BadRequestResponse().SetContent("No fitting endpoint could be found!", "text/plain");
-            }
-
-            return responseContext;
         }
 
         public ResponseContext LoginHandler(RequestContext requestContext)

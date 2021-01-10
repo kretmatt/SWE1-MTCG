@@ -14,7 +14,7 @@ namespace SWE1_MTCG.Battle
         private IRulebook rulebook;
         private static ConcurrentQueue<User> userQueue;
         private IArena _arena;
-        private object padlock = new object();
+        private static object padlock = new object();
         public bool HasStarted = false;
         private Task<BattleSummary> GetBattleSummary;
         private BattleSummary _battleSummary;
@@ -29,9 +29,14 @@ namespace SWE1_MTCG.Battle
         
         public async Task<BattleSummary> DuelEnqueue(User user)
         {
-            userQueue.Enqueue(user);
-            
-            lock (padlock)
+            if (userQueue.Where(u => u.Id == user.Id).ToList().Count == 0)
+                userQueue.Enqueue(user);
+            else
+                return null;
+
+            bool lockTaken = false;
+            Monitor.TryEnter(padlock, TimeSpan.FromMilliseconds(250), ref lockTaken);
+            if (lockTaken)
             {
                 if (GetBattleSummary == null || GetBattleSummary.IsCompleted)
                 {
@@ -44,10 +49,11 @@ namespace SWE1_MTCG.Battle
                         userQueue.TryDequeue(out defender);
                         GetBattleSummary = Duel(attacker, defender);
                         HasStarted = true;
+                        Thread.Sleep(500);
                     }
                 }
+                Monitor.Exit(padlock);
             }
-                
             _battleSummary = await GetBattleSummary;
             HasStarted = false;
             return _battleSummary;
@@ -58,6 +64,7 @@ namespace SWE1_MTCG.Battle
             BattleSummary bs = new BattleSummary();
             bs.BattleResults=new List<BattleResult>();
             int roundCount = 0;
+            Console.WriteLine("{0} vs. {1}", attacker.Username, defender.Username);
             //wincounter -> if attacker wins +1, if defender wins -1; negative number at the end = defender won; positive number at the end = attacker won; 0 = draw
             int winCounter = 0;
             while (roundCount != 100 && attacker.CardDeck.Count != 0 && defender.CardDeck.Count != 0)
@@ -142,6 +149,11 @@ namespace SWE1_MTCG.Battle
                 bs.Loser = null;
             }
 
+            if(bs.Victor==null||bs.Loser==null)
+                Console.WriteLine("It's a draw!");
+            else
+                Console.WriteLine("The winner of the duel is {0} and the loser is {1}",bs.Victor.Username, bs.Loser.Username);
+            
             bs.BattleStats = winCounter;
             _arena=new Arena();
             return bs;

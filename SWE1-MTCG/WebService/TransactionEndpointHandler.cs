@@ -8,15 +8,15 @@ using SWE1_MTCG.DTOs;
 
 namespace SWE1_MTCG.WebService
 {
-    public class TransactionEndpointHandler:IResourceEndpointHandler
+    public class TransactionEndpointHandler:AEndpointHandler
     {
         private IPackageRepository _packageRepository;
         private ISessionRepository _sessionRepository;
         private IUserRepository _userRepository;
-        private List<RouteAction> RouteActions;
-        private const string urlBase="/transactions";
+
         public TransactionEndpointHandler(IPackageRepository packageRepository, ISessionRepository sessionRepository, IUserRepository userRepository)
         {
+            urlBase = "/transactions";
             _packageRepository = packageRepository;
             _userRepository = userRepository;
             _sessionRepository = sessionRepository;
@@ -24,41 +24,10 @@ namespace SWE1_MTCG.WebService
             {
                 new RouteAction(
                     OpenPackageHandler,
-                    String.Format(@"^\{0}\/packages$",urlBase),
+                    $@"^\{urlBase}\/packages$",
                     EHTTPVerbs.POST
                     )
             };
-        }
-        public bool CheckResponsibility(RequestContext requestContext)
-        {
-            return requestContext.URL.StartsWith(String.Format("{0}/",urlBase))||requestContext.URL==urlBase;
-        }
-
-        private RouteAction DetermineRouteAction(RequestContext requestContext)
-        {
-            RouteAction endpointAction=null;
-            RouteActions.ForEach(ra =>
-            {
-                Regex re = new Regex(ra.PathRegex);
-                
-                if (re.IsMatch(requestContext.URL)&&ra.RequestType==requestContext.Type)
-                    endpointAction = ra;
-            });
-            return endpointAction;
-        }
-
-        public ResponseContext HandleRequest(RequestContext requestContext)
-        {
-            RouteAction routeAction = DetermineRouteAction(requestContext);
-            ResponseContext responseContext;
-            if (routeAction != null)
-                responseContext=routeAction.PathAction(requestContext);
-            else
-            {
-                responseContext = ResponseContext.BadRequestResponse().SetContent("No fitting endpoint could be found!", "text/plain");
-            }
-
-            return responseContext;
         }
 
         public ResponseContext OpenPackageHandler(RequestContext requestContext)

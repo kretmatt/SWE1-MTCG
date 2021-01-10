@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SWE1_MTCG.DTOs;
+using SWE1_MTCG.Enums;
 
 namespace SWE1_MTCG.DBFeature
 {
@@ -58,8 +59,11 @@ namespace SWE1_MTCG.DBFeature
             if (_userRepository.Read(user.Id)==null)
                 return 0;
             
-            INpgsqlCommand selectUserStatsFromBattleHistoryCommand = new NpsqlCommand("SELECT sum(pointchange), (SELECT count(*) FROM battlehistory WHERE battleresult='WIN' GROUP BY battleresult), (SELECT count(*) FROM battlehistory WHERE battleresult='LOSS' GROUP BY battleresult) FROM battlehistory WHERE userid = @userid GROUP BY userid;");
+            INpgsqlCommand selectUserStatsFromBattleHistoryCommand = new NpsqlCommand("SELECT sum(pointchange), (SELECT count(*) FROM battlehistory WHERE battleresult = @win GROUP BY battleresult), (SELECT count(*) FROM battlehistory WHERE battleresult = @loss GROUP BY battleresult) FROM battlehistory WHERE userid = @userid GROUP BY userid;");
             selectUserStatsFromBattleHistoryCommand.Parameters.AddWithValue("userid", user.Id);
+            selectUserStatsFromBattleHistoryCommand.Parameters.AddWithValue("win", EBattleResult.WIN.ToString());
+            selectUserStatsFromBattleHistoryCommand.Parameters.AddWithValue("loss", EBattleResult.LOSS.ToString());
+            
             List<object[]> selectUserStatsFromBattleHistory =
                 _mtcgDatabaseConnection.QueryDatabase(selectUserStatsFromBattleHistoryCommand);
 

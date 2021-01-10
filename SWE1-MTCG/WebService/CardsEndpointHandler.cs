@@ -8,58 +8,25 @@ using SWE1_MTCG.DTOs;
 
 namespace SWE1_MTCG.WebService
 {
-    public class CardsEndpointHandler:IResourceEndpointHandler
+    public class CardsEndpointHandler:AEndpointHandler
     {
         private IUserRepository _userRepository;
         private ISessionRepository _sessionRepository;
-        private List<RouteAction> RouteActions;
-        private const string urlBase="/cards";
+
         public CardsEndpointHandler(IUserRepository userRepository, ISessionRepository sessionRepository)
         {
+            urlBase = "/cards";
             _userRepository=userRepository;
             _sessionRepository = sessionRepository;
             RouteActions = new List<RouteAction>
             {
                 new RouteAction(
                     ReadAllHandler,
-                    String.Format(@"^\{0}$",urlBase),
+                    $@"^\{urlBase}$",
                     EHTTPVerbs.GET
                     )
             };
         }
-        public bool CheckResponsibility(RequestContext requestContext)
-        {
-            return requestContext.URL.StartsWith(String.Format("{0}/",urlBase))||requestContext.URL==urlBase;
-        }
-
-        private RouteAction DetermineRouteAction(RequestContext requestContext)
-        {
-            RouteAction endpointAction=null;
-            RouteActions.ForEach(ra =>
-            {
-                Regex re = new Regex(ra.PathRegex);
-                
-                if (re.IsMatch(requestContext.URL)&&ra.RequestType==requestContext.Type)
-                    endpointAction = ra;
-            });
-            return endpointAction;
-        }
-
-        public ResponseContext HandleRequest(RequestContext requestContext)
-        {
-            RouteAction routeAction = DetermineRouteAction(requestContext);
-            ResponseContext responseContext;
-            if (routeAction != null)
-                responseContext=routeAction.PathAction(requestContext);
-            else
-            {
-                responseContext = ResponseContext.BadRequestResponse().SetContent("No fitting endpoint could be found!", "text/plain");
-            }
-
-            return responseContext;
-        }
-
-
         public ResponseContext ReadAllHandler(RequestContext requestContext)
         {
             if(!(requestContext.HeaderPairs.Exists(hp=>hp.HeaderKey=="Authorization")))
