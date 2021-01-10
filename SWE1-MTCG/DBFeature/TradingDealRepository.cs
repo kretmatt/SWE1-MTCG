@@ -48,7 +48,7 @@ namespace SWE1_MTCG.DBFeature
 
         public TradingDeal Read(int id)
         {
-            INpgsqlCommand readTradingDealWithSpecifiedIdCommand = new NpsqlCommand("SELECT * FROM tradingdeal WHERE id=@id;");
+            INpgsqlCommand readTradingDealWithSpecifiedIdCommand = new NpsqlCommand("SELECT * FROM tradingdeal WHERE id = @id;");
             readTradingDealWithSpecifiedIdCommand.Parameters.AddWithValue("id", id);
             List<object[]> readTradingDealWithSpecifiedIdResults =
                 _mtcgDatabaseConnection.QueryDatabase(readTradingDealWithSpecifiedIdCommand);
@@ -80,7 +80,7 @@ namespace SWE1_MTCG.DBFeature
 
         public int Delete(int id, User user)
         {
-            INpgsqlCommand deleteTradingDealOfUserCommand = new NpsqlCommand("DELETE FROM tradingdeal WHERE id=@id AND userid=@userid;");
+            INpgsqlCommand deleteTradingDealOfUserCommand = new NpsqlCommand("DELETE FROM tradingdeal WHERE id = @id AND userid = @userid;");
             deleteTradingDealOfUserCommand.Parameters.AddWithValue("id", id);
             deleteTradingDealOfUserCommand.Parameters.AddWithValue("userid", user.Id);
             return _mtcgDatabaseConnection.ExecuteStatement(deleteTradingDealOfUserCommand);
@@ -91,7 +91,7 @@ namespace SWE1_MTCG.DBFeature
             if (!TradePossible(tradingDeal, user, card))
                 return 0;
 
-            INpgsqlCommand readCardsToBePossiblyDeletedFromVendorCommand = new NpsqlCommand("SELECT cs.id FROM cardstack cs LEFT JOIN carddeck c on cs.cardid = c.cardid AND cs.userid=c.userid WHERE cs.userid=@userid AND cs.cardid=@cardid AND c.id IS NULL;");
+            INpgsqlCommand readCardsToBePossiblyDeletedFromVendorCommand = new NpsqlCommand("SELECT cs.id FROM cardstack cs LEFT JOIN carddeck c on cs.cardid = c.cardid AND cs.userid=c.userid WHERE cs.userid = @userid AND cs.cardid = @cardid AND c.id IS NULL;");
             readCardsToBePossiblyDeletedFromVendorCommand.Parameters.AddWithValue("userid", tradingDeal.OfferingUser.Id);
             readCardsToBePossiblyDeletedFromVendorCommand.Parameters.AddWithValue("cardid", tradingDeal.OfferedCard.Id);
             List<object[]> readCardsToBePossiblyDeletedFromVendorResults =
@@ -100,7 +100,7 @@ namespace SWE1_MTCG.DBFeature
             if (readCardsToBePossiblyDeletedFromVendorResults.Count < 1)
                 return 0;
             //Remove card from vendor cardstack
-            INpgsqlCommand removeCardFromVendorCommand = new NpsqlCommand("DELETE FROM cardstack WHERE id=@id;");
+            INpgsqlCommand removeCardFromVendorCommand = new NpsqlCommand("DELETE FROM cardstack WHERE id = @id;");
             removeCardFromVendorCommand.Parameters.AddWithValue("id",Convert.ToInt32(readCardsToBePossiblyDeletedFromVendorResults[0][0]));
             int affectedRows = _mtcgDatabaseConnection.ExecuteStatement(removeCardFromVendorCommand);
             
@@ -111,7 +111,7 @@ namespace SWE1_MTCG.DBFeature
             
             affectedRows += _mtcgDatabaseConnection.ExecuteStatement(transferCardToTradePartnerCommand);
             
-            INpgsqlCommand readCardsToBePossiblyDeletedFromBuyerCommand = new NpsqlCommand("SELECT cs.id FROM cardstack cs LEFT JOIN carddeck c on cs.cardid = c.cardid AND cs.userid=c.userid WHERE cs.userid=@userid AND cs.cardid=@cardid AND c.id IS NULL;");
+            INpgsqlCommand readCardsToBePossiblyDeletedFromBuyerCommand = new NpsqlCommand("SELECT cs.id FROM cardstack cs LEFT JOIN carddeck c on cs.cardid = c.cardid AND cs.userid=c.userid WHERE cs.userid = @userid AND cs.cardid=@cardid AND c.id IS NULL;");
             readCardsToBePossiblyDeletedFromBuyerCommand.Parameters.AddWithValue("userid", user.Id);
             readCardsToBePossiblyDeletedFromBuyerCommand.Parameters.AddWithValue("cardid", card.Id);
             List<object[]> readCardsToBePossiblyDeletedFromBuyerResults =
@@ -120,7 +120,7 @@ namespace SWE1_MTCG.DBFeature
             if (readCardsToBePossiblyDeletedFromBuyerResults.Count < 1)
                 return affectedRows;
 
-            INpgsqlCommand removeCardFromBuyerCommand = new NpsqlCommand("DELETE FROM cardstack WHERE id=@id;");
+            INpgsqlCommand removeCardFromBuyerCommand = new NpsqlCommand("DELETE FROM cardstack WHERE id = @id;");
             removeCardFromBuyerCommand.Parameters.AddWithValue("id",Convert.ToInt32(readCardsToBePossiblyDeletedFromBuyerResults[0][0]));
             affectedRows += _mtcgDatabaseConnection.ExecuteStatement(removeCardFromBuyerCommand);
             
@@ -145,7 +145,7 @@ namespace SWE1_MTCG.DBFeature
             if (!TradePossible(tradingDeal, user))
                 return 0;
 
-            INpgsqlCommand readCardsToBePossiblyDeletedCommand = new NpsqlCommand("SELECT cs.id FROM cardstack cs LEFT JOIN carddeck c on cs.cardid = c.cardid AND cs.userid=c.userid WHERE cs.userid=@userid AND cs.cardid=@cardid AND c.id IS NULL;");
+            INpgsqlCommand readCardsToBePossiblyDeletedCommand = new NpsqlCommand("SELECT cs.id FROM cardstack cs LEFT JOIN carddeck c on cs.cardid = c.cardid AND cs.userid=c.userid WHERE cs.userid = @userid AND cs.cardid = @cardid AND c.id IS NULL;");
             readCardsToBePossiblyDeletedCommand.Parameters.AddWithValue("userid", tradingDeal.OfferingUser.Id);
             readCardsToBePossiblyDeletedCommand.Parameters.AddWithValue("cardid", tradingDeal.OfferedCard.Id);
             List<object[]> readCardsToBePossiblyDeletedResults =
@@ -154,7 +154,7 @@ namespace SWE1_MTCG.DBFeature
             if (readCardsToBePossiblyDeletedResults.Count < 1)
                 return 0;
             
-            INpgsqlCommand removeCardFromVendorCommand = new NpsqlCommand("DELETE FROM cardstack WHERE id=@id;");
+            INpgsqlCommand removeCardFromVendorCommand = new NpsqlCommand("DELETE FROM cardstack WHERE id = @id;");
             removeCardFromVendorCommand.Parameters.AddWithValue("id",Convert.ToInt32(readCardsToBePossiblyDeletedResults[0][0]));
             int affectedRows = _mtcgDatabaseConnection.ExecuteStatement(removeCardFromVendorCommand);
 
