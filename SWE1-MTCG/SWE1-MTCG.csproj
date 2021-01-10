@@ -174,7 +174,9 @@
         <Compile Include="WebService\RequestContext.cs" />
         <Compile Include="WebService\ResponseContext.cs" />
         <Compile Include="WebService\RouteAction.cs" />
+        <Compile Include="WebService\ScoreEndpointHandler.cs" />
         <Compile Include="WebService\SessionEndpointHandler.cs" />
+        <Compile Include="WebService\StatsEndpointHandler.cs" />
         <Compile Include="WebService\TCPClient.cs" />
         <Compile Include="WebService\TCPListener.cs" />
         <Compile Include="WebService\TransactionEndpointHandler.cs" />

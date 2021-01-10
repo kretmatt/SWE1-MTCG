@@ -31,6 +31,8 @@ namespace SWE1_MTCG.WebService
             ResourceEndpointHandlers.Add(new TransactionEndpointHandler(new PackageRepository(),new SessionRepository(), new UserRepository()));
             ResourceEndpointHandlers.Add(new CardsEndpointHandler(new UserRepository(), new SessionRepository()));
             ResourceEndpointHandlers.Add(new DeckEndpointHandler(new UserRepository(), new SessionRepository(),new CardRepository()));
+            ResourceEndpointHandlers.Add(new StatsEndpointHandler(new UserRepository(), new SessionRepository(), new BattleHistoryRepository()));
+            ResourceEndpointHandlers.Add(new ScoreEndpointHandler(new UserRepository(), new SessionRepository(), new UserStatsRepository()));
         }
 
         public void Start()
