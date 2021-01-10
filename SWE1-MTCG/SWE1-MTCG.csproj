@@ -162,6 +162,8 @@
         <Compile Include="ServantFeature\RiderHierarchy.cs" />
         <Compile Include="ServantFeature\SaberHierarchy.cs" />
         <Compile Include="WebService\BaseHTTPServer.cs" />
+        <Compile Include="WebService\CardsEndpointHandler.cs" />
+        <Compile Include="WebService\DeckEndpointHandler.cs" />
         <Compile Include="WebService\EHTTPVerbs.cs" />
         <Compile Include="WebService\HttpHeaderPair.cs" />
         <Compile Include="WebService\IHTTPServer.cs" />

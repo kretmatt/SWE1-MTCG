@@ -29,6 +29,8 @@ namespace SWE1_MTCG.WebService
             ResourceEndpointHandlers.Add(new SessionEndpointHandler(new SessionRepository()));
             ResourceEndpointHandlers.Add(new PackageEndpointHandler(new PackageRepository(), new SessionRepository(), new UserRepository(), new CardRepository()));
             ResourceEndpointHandlers.Add(new TransactionEndpointHandler(new PackageRepository(),new SessionRepository(), new UserRepository()));
+            ResourceEndpointHandlers.Add(new CardsEndpointHandler(new UserRepository(), new SessionRepository()));
+            ResourceEndpointHandlers.Add(new DeckEndpointHandler(new UserRepository(), new SessionRepository(),new CardRepository()));
         }
 
         public void Start()
