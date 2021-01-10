@@ -161,6 +161,18 @@
         <Compile Include="ServantFeature\LancerHierarchy.cs" />
         <Compile Include="ServantFeature\RiderHierarchy.cs" />
         <Compile Include="ServantFeature\SaberHierarchy.cs" />
+        <Compile Include="WebService\BaseHTTPServer.cs" />
+        <Compile Include="WebService\EHTTPVerbs.cs" />
+        <Compile Include="WebService\HttpHeaderPair.cs" />
+        <Compile Include="WebService\IHTTPServer.cs" />
+        <Compile Include="WebService\IResourceEndpointHandler.cs" />
+        <Compile Include="WebService\ITCPClient.cs" />
+        <Compile Include="WebService\ITCPListener.cs" />
+        <Compile Include="WebService\RequestContext.cs" />
+        <Compile Include="WebService\ResponseContext.cs" />
+        <Compile Include="WebService\RouteAction.cs" />
+        <Compile Include="WebService\TCPClient.cs" />
+        <Compile Include="WebService\TCPListener.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
