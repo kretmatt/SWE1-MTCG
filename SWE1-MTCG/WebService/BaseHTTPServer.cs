@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using SWE1_MTCG.DBFeature;
 
 namespace SWE1_MTCG.WebService
 {
@@ -24,6 +25,8 @@ namespace SWE1_MTCG.WebService
             this.port = port;
             listener = new TCPListener(IPAddress.Any, this.port);
             ResourceEndpointHandlers = new List<IResourceEndpointHandler>();
+            ResourceEndpointHandlers.Add(new UserEndpointHandler(new UserRepository(), new SessionRepository()));
+            ResourceEndpointHandlers.Add(new SessionEndpointHandler(new SessionRepository()));
         }
 
         public void Start()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 
 namespace SWE1_MTCG.WebService
 {
@@ -22,7 +23,10 @@ namespace SWE1_MTCG.WebService
         public void AddHeader(String headerLine)
         {
             String[] headerPairParts = headerLine.Split(' ');
-            HeaderPairs.Add(new HttpHeaderPair(headerPairParts[0].Trim(':'),headerPairParts[1]));
+            if(headerPairParts[0].Trim(':')=="Authorization"&&headerPairParts[1]=="Basic")
+                HeaderPairs.Add(new HttpHeaderPair(headerPairParts[0].Trim(':'),headerPairParts[2].Split('-')[0]));
+            else
+                HeaderPairs.Add(new HttpHeaderPair(headerPairParts[0].Trim(':'),headerPairParts[1]));
         }
         
         public static RequestContext GetBaseRequest(String request)

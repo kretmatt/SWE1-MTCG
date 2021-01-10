@@ -37,6 +37,11 @@ namespace SWE1_MTCG.WebService
         {
             return new ResponseContext(BaseHTTPServer.VERSION, "Not Found", 404);
         }
+
+        public static ResponseContext UnauthorizedResponse()
+        {
+            return new ResponseContext(BaseHTTPServer.VERSION, "Unauthorized", 401);
+        }
         
         public ResponseContext AddHeader(HttpHeaderPair httpHeaderPair)
         {
@@ -68,7 +73,7 @@ namespace SWE1_MTCG.WebService
             string responseString = String.Format("{0} {1} {2}\n", HTTPVersion, StatusCode, StatusMessage);
             HeaderPairs.ForEach(hp => responseString += String.Format("{0}\n", hp.ToString()));
             if (!String.IsNullOrEmpty(Content))
-                responseString = String.Format("{0}\n{1}\n", responseString, Content);
+                responseString = String.Format("{0}\n{1}\n\n", responseString, Content);
             return responseString;
         }
     }
