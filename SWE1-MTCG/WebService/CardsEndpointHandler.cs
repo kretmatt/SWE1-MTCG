@@ -38,7 +38,7 @@ namespace SWE1_MTCG.WebService
                 .SingleOrDefault(hp => hp.HeaderKey == "Authorization").HeaderValue);
             
             if(user==null)
-                return ResponseContext.BadRequestResponse().SetContent("User does not exist.", "text/plain");
+                return ResponseContext.NotFoundResponse().SetContent("User does not exist.", "text/plain");
             return ResponseContext.OKResponse().SetContent(JsonNet.Serialize(user.CardStack), "application/json");
         }
     }

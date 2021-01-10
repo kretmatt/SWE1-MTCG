@@ -181,6 +181,7 @@
         <Compile Include="WebService\StatsEndpointHandler.cs" />
         <Compile Include="WebService\TCPClient.cs" />
         <Compile Include="WebService\TCPListener.cs" />
+        <Compile Include="WebService\TradingEndpointHandler.cs" />
         <Compile Include="WebService\TransactionEndpointHandler.cs" />
         <Compile Include="WebService\UserEndpointHandler.cs" />
     </ItemGroup>

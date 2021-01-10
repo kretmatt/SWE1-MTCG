@@ -51,7 +51,7 @@ namespace SWE1_MTCG.WebService
                 .SingleOrDefault(hp => hp.HeaderKey == "Authorization").HeaderValue);
             
             if(user==null)
-                return ResponseContext.BadRequestResponse().SetContent("User does not exist.", "text/plain");
+                return ResponseContext.NotFoundResponse().SetContent("User does not exist.", "text/plain");
             if(requestContext.URL.Contains("?format=plain"))
                 return ResponseContext.OKResponse().SetContent(String.Concat(user.CardDeck), "text/plain");
             return ResponseContext.OKResponse().SetContent(JsonNet.Serialize(user.CardDeck), "application/json");
@@ -68,7 +68,7 @@ namespace SWE1_MTCG.WebService
                 .SingleOrDefault(hp => hp.HeaderKey == "Authorization").HeaderValue);
             
             if(user==null)
-                return ResponseContext.BadRequestResponse().SetContent("User does not exist.", "text/plain");
+                return ResponseContext.NotFoundResponse().SetContent("User does not exist.", "text/plain");
             
             if(!(requestContext.HeaderPairs.Exists(hp=>hp.HeaderKey=="Content-Type"&&hp.HeaderValue=="application/json")))
                 return ResponseContext.BadRequestResponse().SetContent("Please send data with the following content type: application/json", "text/plain");

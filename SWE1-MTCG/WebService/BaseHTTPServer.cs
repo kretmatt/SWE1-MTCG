@@ -34,6 +34,7 @@ namespace SWE1_MTCG.WebService
             ResourceEndpointHandlers.Add(new StatsEndpointHandler(new UserRepository(), new SessionRepository(), new BattleHistoryRepository()));
             ResourceEndpointHandlers.Add(new ScoreEndpointHandler(new UserRepository(), new SessionRepository(), new UserStatsRepository()));
             ResourceEndpointHandlers.Add(new BattleEndpointHandler(new UserRepository(), new SessionRepository(), new BattleHistoryRepository(), new UserStatsRepository()));
+            ResourceEndpointHandlers.Add(new TradingEndpointHandler(new SessionRepository(), new UserRepository(), new CardRepository(), new TradingDealRepository()));
         }
 
         public void Start()

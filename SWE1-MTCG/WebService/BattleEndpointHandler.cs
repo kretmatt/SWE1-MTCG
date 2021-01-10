@@ -48,7 +48,7 @@ namespace SWE1_MTCG.WebService
             User user = _userRepository.Read(requestContext.HeaderPairs.SingleOrDefault(hp=>hp.HeaderKey=="Authorization").HeaderValue);
             
             if(user==null)
-                return ResponseContext.BadRequestResponse().SetContent("User does not exist.", "text/plain");
+                return ResponseContext.NotFoundResponse().SetContent("User does not exist.", "text/plain");
             
             if(user.CardDeck.Count!=4)
                 return ResponseContext.BadRequestResponse().SetContent("Carddeck is not properly set.", "text/plain");

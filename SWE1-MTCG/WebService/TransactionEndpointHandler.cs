@@ -43,7 +43,7 @@ namespace SWE1_MTCG.WebService
                 .SingleOrDefault(hp => hp.HeaderKey == "Authorization").HeaderValue);
             
             if(user==null)
-                return ResponseContext.BadRequestResponse().SetContent("User could not be loaded!", "text/plain");
+                return ResponseContext.NotFoundResponse().SetContent("User could not be loaded!", "text/plain");
             
             int affectedRows = _packageRepository.OpenPackage(user);
 
