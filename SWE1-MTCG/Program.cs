@@ -15,9 +15,11 @@ namespace SWE1_MTCG
     {
         public static void Main(string[] args)
         {
-            ICardRepository cardRepository = new CardRepository();
+            IHTTPServer baseHttpServer = new BaseHTTPServer(10001);
+            baseHttpServer.Start();
 
-            cardRepository.CreateServantCard("Arash", "Death doesn't even faze him anymore.", 30, EElementalType.GROUND,
+            
+            /*cardRepository.CreateServantCard("Arash", "Death doesn't even faze him anymore.", 30, EElementalType.GROUND,
                 EServantClass.ARCHER);
             cardRepository.CreateServantCard("King Arthur", "The leader of the round table is not all talk.", 25,
                 EElementalType.NORMAL, EServantClass.SABER);
@@ -64,11 +66,7 @@ namespace SWE1_MTCG
             cardRepository.CreateMonsterCard("Fire elf", "Fire elves have known dragons since their childhood and can evade their attacks.", 18, EElementalType.FIRE,EMonsterType.ELF);
             cardRepository.CreateMonsterCard("Goblin soldier", "Goblins are weak on their own, but you shouldn't underestimate them in groups.", 15, EElementalType.NORMAL,EMonsterType.GOBLIN);
             cardRepository.CreateMonsterCard("Fafnir", "The evil dragon, whose blood made Siegfried invincible.", 44,EElementalType.GROUND,EMonsterType.DRAGON);
-            cardRepository.CreateMonsterCard("Knight A", "A random knight, who still needs to make a name for himself.", 22, EElementalType.GROUND, EMonsterType.KNIGHT);
-
-
-
-
+            cardRepository.CreateMonsterCard("Knight A", "A random knight, who still needs to make a name for himself.", 22, EElementalType.GROUND, EMonsterType.KNIGHT); -> Some cards*/
         }
     }
 }
