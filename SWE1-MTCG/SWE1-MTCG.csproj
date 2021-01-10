@@ -88,6 +88,17 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Battle\Area.cs" />
+        <Compile Include="Battle\Arena.cs" />
+        <Compile Include="Battle\BattleResult.cs" />
+        <Compile Include="Battle\BattleSummary.cs" />
+        <Compile Include="Battle\BattleSystem.cs" />
+        <Compile Include="Battle\IArena.cs" />
+        <Compile Include="Battle\IAreaBattleInfluencer.cs" />
+        <Compile Include="Battle\IRulebook.cs" />
+        <Compile Include="Battle\ITrapBattleInfluencer.cs" />
+        <Compile Include="Battle\Rulebook.cs" />
+        <Compile Include="Battle\Trap.cs" />
         <Compile Include="DBFeature\BattleHistoryRepository.cs" />
         <Compile Include="DBFeature\CardRepository.cs" />
         <Compile Include="DBFeature\IBattleHistoryRepository.cs" />

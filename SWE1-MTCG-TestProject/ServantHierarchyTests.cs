@@ -14,11 +14,11 @@ namespace SWE1_MTCG_TestProject
             get
             {
                 yield return new TestCaseData(new BerserkerHierarchy(),EServantClass.ARCHER,1);
-                yield return new TestCaseData(new SaberHierarchy(),EServantClass.LANCER,2);
+                yield return new TestCaseData(new SaberHierarchy(),EServantClass.LANCER,0.5);
                 yield return new TestCaseData(new ArcherHierarchy(),EServantClass.CASTER,1);
-                yield return new TestCaseData(new LancerHierarchy(),EServantClass.SABER,0.5);
-                yield return new TestCaseData(new RiderHierarchy(),EServantClass.ASSASSIN,0.5);
-                yield return new TestCaseData(new AssassinHierarchy(),EServantClass.RIDER,2);
+                yield return new TestCaseData(new LancerHierarchy(),EServantClass.SABER,2);
+                yield return new TestCaseData(new RiderHierarchy(),EServantClass.ASSASSIN,2);
+                yield return new TestCaseData(new AssassinHierarchy(),EServantClass.RIDER,0.5);
                 yield return new TestCaseData(new CasterHierarchy(),EServantClass.BERSERKER,1);
             }
         }

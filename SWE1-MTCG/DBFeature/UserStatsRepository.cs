@@ -43,7 +43,7 @@ namespace SWE1_MTCG.DBFeature
             if (_userRepository.Read(user.Username)==null)
                 return null;
             
-            INpgsqlCommand readUserStatsCommand = new NpsqlCommand("SELECT * FROM userstats WHERE id=@id;");
+            INpgsqlCommand readUserStatsCommand = new NpsqlCommand("SELECT * FROM userstats WHERE id = @id;");
             readUserStatsCommand.Parameters.AddWithValue("id", user.Id);
             List<object[]> readUserStatsResults = _mtcgDatabaseConnection.QueryDatabase(readUserStatsCommand);
 
@@ -58,7 +58,7 @@ namespace SWE1_MTCG.DBFeature
             if (_userRepository.Read(user.Id)==null)
                 return 0;
             
-            INpgsqlCommand selectUserStatsFromBattleHistoryCommand = new NpsqlCommand("SELECT sum(pointchange), (SELECT count(*) FROM battlehistory WHERE battleresult='WIN' GROUP BY battleresult), (SELECT count(*) FROM battlehistory WHERE battleresult='LOSS' GROUP BY battleresult) FROM battlehistory WHERE userid=@userid GROUP BY userid;");
+            INpgsqlCommand selectUserStatsFromBattleHistoryCommand = new NpsqlCommand("SELECT sum(pointchange), (SELECT count(*) FROM battlehistory WHERE battleresult='WIN' GROUP BY battleresult), (SELECT count(*) FROM battlehistory WHERE battleresult='LOSS' GROUP BY battleresult) FROM battlehistory WHERE userid = @userid GROUP BY userid;");
             selectUserStatsFromBattleHistoryCommand.Parameters.AddWithValue("userid", user.Id);
             List<object[]> selectUserStatsFromBattleHistory =
                 _mtcgDatabaseConnection.QueryDatabase(selectUserStatsFromBattleHistoryCommand);
@@ -79,7 +79,7 @@ namespace SWE1_MTCG.DBFeature
             else
                 winloseratio = (double)wins / (double)losses;
 
-            INpgsqlCommand updateUserStatsCommand = new NpsqlCommand("UPDATE userstats SET points=@points, winloseratio=@winloseratio WHERE id=@id;");
+            INpgsqlCommand updateUserStatsCommand = new NpsqlCommand("UPDATE userstats SET points = @points, winloseratio = @winloseratio WHERE id = @id;");
             updateUserStatsCommand.Parameters.AddWithValue("points", currentPoints);
             updateUserStatsCommand.Parameters.AddWithValue("winloseratio", winloseratio);
             updateUserStatsCommand.Parameters.AddWithValue("id", user.Id);
