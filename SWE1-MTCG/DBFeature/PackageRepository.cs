@@ -9,7 +9,7 @@ namespace SWE1_MTCG.DBFeature
         private IMTCGDatabaseConnection _mtcgDatabaseConnection;
         private ICardRepository _cardRepository;
         private IUserRepository _userRepository;
-        private static int packageCosts = 4;
+        private static int packageCosts = 5;
         public PackageRepository()
         {
             _mtcgDatabaseConnection = MTCGDatabaseConnection.ReturnMTCGDatabaseConnection();

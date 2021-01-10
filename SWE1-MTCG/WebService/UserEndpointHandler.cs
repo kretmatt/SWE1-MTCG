@@ -100,11 +100,11 @@ namespace SWE1_MTCG.WebService
             
             if(!(requestContext.HeaderPairs.Exists(hp=>hp.HeaderKey=="Authorization")))
                 return ResponseContext.UnauthorizedResponse().SetContent("Appropriate credentials are missing.", "text/plain");
-            if(!_sessionRepository.CheckIfInValidSession(requestContext.HeaderPairs.Single(hp=>hp.HeaderKey=="Authorization").HeaderValue))
+            if(!_sessionRepository.CheckIfInValidSession(requestContext.HeaderPairs.SingleOrDefault(hp=>hp.HeaderKey=="Authorization").HeaderValue))
                 return ResponseContext.UnauthorizedResponse().SetContent("There is no valid session for the token used.", "text/plain");
             string username = requestContext.URL.Split('/')[2];
             
-            if(username!=requestContext.HeaderPairs.Single(hp=>hp.HeaderKey=="Authorization").HeaderValue)
+            if(username!=requestContext.HeaderPairs.SingleOrDefault(hp=>hp.HeaderKey=="Authorization").HeaderValue)
                 return ResponseContext.BadRequestResponse().SetContent("You can only see your own profilepage. If you want to know more about other users, battle them or look at some trades.", "text/plain");
 
             User user = _userRepository.Read(username);
@@ -121,11 +121,11 @@ namespace SWE1_MTCG.WebService
             
             if(!(requestContext.HeaderPairs.Exists(hp=>hp.HeaderKey=="Authorization")))
                 return ResponseContext.UnauthorizedResponse().SetContent("Appropriate credentials are missing.", "text/plain");
-            if(!_sessionRepository.CheckIfInValidSession(requestContext.HeaderPairs.Single(hp=>hp.HeaderKey=="Authorization").HeaderValue))
+            if(!_sessionRepository.CheckIfInValidSession(requestContext.HeaderPairs.SingleOrDefault(hp=>hp.HeaderKey=="Authorization").HeaderValue))
                 return ResponseContext.UnauthorizedResponse().SetContent("There is no valid session for the token used.", "text/plain");
             string username = requestContext.URL.Split('/')[2];
             
-            if(username!=requestContext.HeaderPairs.Single(hp=>hp.HeaderKey=="Authorization").HeaderValue)
+            if(username!=requestContext.HeaderPairs.SingleOrDefault(hp=>hp.HeaderKey=="Authorization").HeaderValue)
                 return ResponseContext.BadRequestResponse().SetContent("You can only see your own profilepage. If you want to know more about other users, battle them or look at some trades.", "text/plain");
             
             if(!(requestContext.HeaderPairs.Exists(hp=>hp.HeaderKey=="Content-Type"&&hp.HeaderValue=="application/json")))

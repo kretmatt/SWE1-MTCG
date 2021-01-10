@@ -168,12 +168,14 @@
         <Compile Include="WebService\IResourceEndpointHandler.cs" />
         <Compile Include="WebService\ITCPClient.cs" />
         <Compile Include="WebService\ITCPListener.cs" />
+        <Compile Include="WebService\PackageEndpointHandler.cs" />
         <Compile Include="WebService\RequestContext.cs" />
         <Compile Include="WebService\ResponseContext.cs" />
         <Compile Include="WebService\RouteAction.cs" />
         <Compile Include="WebService\SessionEndpointHandler.cs" />
         <Compile Include="WebService\TCPClient.cs" />
         <Compile Include="WebService\TCPListener.cs" />
+        <Compile Include="WebService\TransactionEndpointHandler.cs" />
         <Compile Include="WebService\UserEndpointHandler.cs" />
     </ItemGroup>
     <ItemGroup>
