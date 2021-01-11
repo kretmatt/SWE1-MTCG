@@ -8,7 +8,7 @@ namespace SWE1_MTCG.DBFeature
 {
     public class TradingDealRepository:ITradingDealRepository
     {
-        private MTCGDatabaseConnection _mtcgDatabaseConnection;
+        private IMTCGDatabaseConnection _mtcgDatabaseConnection;
         private IUserRepository _userRepository;
         private ICardRepository _cardRepository;
         public TradingDealRepository()
@@ -164,6 +164,12 @@ namespace SWE1_MTCG.DBFeature
             
             affectedRows += _mtcgDatabaseConnection.ExecuteStatement(transferCardToBuyerCommand);
             affectedRows+=_userRepository.DeductCoins(tradingDeal.RequiredCoins, user);
+            
+            //Inserted after submission
+            INpgsqlCommand updateVendorCoinsCommand = new NpsqlCommand("UPDATE mtcguser SET coins = @newcoins WHERE id = @userid");
+            updateVendorCoinsCommand.Parameters.AddWithValue("userid",tradingDeal.OfferingUser.Id);
+            updateVendorCoinsCommand.Parameters.AddWithValue("newcoins", tradingDeal.OfferingUser.Coins+tradingDeal.RequiredCoins);
+            _mtcgDatabaseConnection.ExecuteStatement(updateVendorCoinsCommand);
 
             List<TradingDeal> allTradingDealsFromUserForOfferedCard = ReadAll().Where(td=>td.OfferingUser.Id==tradingDeal.OfferingUser.Id&&td.OfferedCard.Id==tradingDeal.OfferedCard.Id).ToList();
 

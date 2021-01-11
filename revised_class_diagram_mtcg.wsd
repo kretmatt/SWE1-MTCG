@@ -1,0 +1,622 @@
+@startuml
+
+abstract class ACard{
+    + int Id {get;set;}
+    + string Name {get;set;}
+    + string Description {get;set;}
+    + double Damage {get;set;}
+    + EElementalType ElementalType {get;set;}
+    + ECardType CardType {get;set;}
+
+    + override string ToString()
+}
+class AreaCard extends ACard{
+    + int Uses{get;set;}
+}
+class MonsterCard extends ACard{
+    + EMonsterType MonsterType {get;set;}
+}
+class ServantCard extends ACard{
+    + EServantClass ServantClass {get;set;}
+}
+class SpellCard extends ACard{}
+class TrapCard extends ACard{
+    + int Uses{get;set;}
+}
+
+
+class BattleHistory{
+    + int Id {get;set;}
+    + User User {get;set;}
+    + EBattleResult BattleResult {get;set;}
+    + int PointChange {get;set;}
+}
+
+class Package {
+    + int Id {get;set}
+    + List<ACard> Cards {get;set;}
+}
+
+class TradingDeal {
+    + int Id {get;set;}
+    + ACard OfferedCard {get;set;}
+    + int RequiredCoins {get;set;}
+    + int MinDamage {get;set;}
+    + ECardType CardType {get;set;}
+    + User OfferingUser {get;set;}
+}
+
+class User{
+    + int Id {get;set;}
+    + string Username {get;set;}
+    + string Bio {get;set;}
+    + List<ACard> CardStack {get;set;}
+    + List<ACard> CardDeck {get;set;}
+    + int Coins {get;set;}
+}
+
+class UserStats{
+    + User User {get;set;}
+    + int Points {get;set;}
+    + double WinLoseReatio {get;set;}
+}
+
+
+User o-- ACard
+UserStats o-- User
+TradingDeal o-- ACard
+TradingDeal o-- User
+Package o-- ACard
+BattleHistory o-- User
+
+enum EBattleResult{
+    WIN,
+    LOSS,
+    DRAW
+}
+enum ECardType{
+    MONSTER,
+    AREA;
+    TRAP,
+    SERVANT,
+    SPELL
+}
+enum EElementalType{
+    FIRE,
+    WATER,
+    NORMAL,
+    GROUND,
+    ELECTRIC
+}
+enum EMonsterType{
+    GOBLIN,
+    WIZZARD,
+    KNIGHT,
+    KRAKEN,
+    DRAGON,
+    ORK,
+    ELF
+}
+
+enum EServantClass{
+    SABER,
+    ARCHER,
+    LANCER,
+    RIDER,
+    ASSASSIN,
+    CASTER,
+    BERSERKER
+}
+
+
+abstract class AAffinityChart{
+    # List<EElementalType> elementalWeaknesses
+    # List<EElementalType> elementalStrengths
+    + EElementalType ElementalType
+
+    + virtual double CalculateElementalAttackModifier(EElementalType elementalType)
+}
+
+
+
+abstract class AServantHierarchy{
+    # List<EServantClass> servantWeaknesses
+    # List<EServantClass> servantStrengths
+    + EServantClass ServantClass
+
+    + virtual double CalculateServantAttackModifier(EServantClass servantClass)
+}
+
+
+abstract class AMonsterHierarchy{
+    # List<EMonsterType> generalMonsterWeaknesses
+    # List<SpecificElementalMonsterCombination> specificElementalMonsterWeaknesses
+
+    # List<ECardType> generalCardStrengths
+    # List<SpecificElementalCardTypeCombination> specificElementalCardTypeStrengths
+
+    # List<ECardType> generalCardWeaknesses
+    # List<SpecificElementalCardTypeCombination> specificElementalCardTypeWeaknesses
+
+
+    + virtual double CalculateMonsterAttackModifier(EMonsterType monsterType, EElementalType elementalType)
+    + virtual double CalculateMixedBattleEnemyAttackModifier(ECardType cardType, EElementalType elementalType)
+    + virtual double CalculateMixedBattleOwnAttackModifier(ECardType cardType, EElementalType elementalType)
+}
+
+class SpecificElementalMonsterCombination{
+    + EMonsterType MonsterType {get;set;}
+    + EElementalType ElementalType {get;set;}
+}
+
+class SpecificElementalCardTypeCombination{
+    + ECardType CardType{get;set;}
+    + EElementalType ElementalType{get;set;}
+}
+
+AMonsterHierarchy o-- SpecificElementalCardTypeCombination
+AMonsterHierarchy o-- SpecificElementalMonsterCombination
+
+
+interface IAreaBattleInfluencer{
+    + BattleResult InfluenceBattle(BattleResult battleResult)
+}
+
+interface ITrapBattleInfluencer{
+    + BattleResult InfluenceBattle(BattleResult battleResult, bool plantedByAttacker)
+}
+
+interface IArena{
+    + BattleResult ConductBattle(ACard attacker, ACard defender, IRulebook rulebook)
+}
+
+interface IRulebook{
+    + BattleResult DetermineVictor(ACard attacker, ACard defender)
+}
+
+class BattleResult{
+    + ACard Victor{get;set;}
+    + ACard Attacker{get;set;}
+    + ACard Defender{get;set;}
+    + double AttackerDamage{get;set;}
+    + double DefenderDamage{get;set;}
+    + string BattleDescription{get;set;}
+}
+
+class BattleSummary{
+    + int BattleStats{get;set;}
+    + User Victor {get;set;}
+    + User Loser {get;set;}
+    + List<BattleResult> BattleResults {get;set;}
+}
+
+class Area implements IAreaBattleInfluencer{
+    + EElementalType ElementalType{get;set;}
+}
+
+class Trap implements ITrapBattleInfluencer{
+    + double PureDamage{get;set;}
+}
+
+class Arena implements IArena{
+    + IAreaBattleInfluencer battleFieldArea
+    + ITrapBattleInfluencer attackerTrap
+    + ITrapBattleInfluencer defenderTrap
+}
+
+class Rulebook implements IRulebook{
+    - List<AServantHierarchy> servantHierarchies
+    - List<AAffinityChart> affinityCharts
+    - List<AMonsterHierarchy> monsterHierarchies
+}
+
+class BattleSystem{
+    - IRulebook rulebook
+    - static ConcurrentQueue<User> userQueue
+    - IArena _arena
+    - static object padlock
+    - Task<BattleSummary> GetBattleSummary
+    - BattleSummary _battleSummary
+
+    + async Task<BattleSummary> DuelEnqueue(User user)
+    + async Task<BattleSummary> Duel(User attacker, User defender)
+}
+
+
+Rulebook *-- AServantHierarchy
+Rulebook *-- AAffinityChart
+Rulebook *-- AMonsterHierarchy
+Arena o-- ITrapBattleInfluencer
+Arena o-- IAreaBattleInfluencer
+BattleSystem *--IArena
+BattleSystem *-- IRulebook
+BattleSystem -- BattleSummary
+Arena -- IRulebook
+IRulebook -- BattleResult
+IArena -- BattleResult
+ITrapBattleInfluencer -- BattleResult
+IAreaBattleInfluencer -- BattleResult
+
+interface INpgsqlDataReader{
+    + bool Read()
+    + object GetValue(int i)
+    + int FieldCount()
+}
+interface INpgsqlCommand{
+    + int ExecuteNonQuery()
+    + INpgsqlDataReader ExecuteReader()
+    + Npgsql.NpgsqlParameterCollection Parameters {get;}
+    + Npgsql.NpgsqlConnection Connection {get;set;}
+}
+interface IMTCGDatabaseConnection{
+    + int ExecuteStatement(INpgsqlCommand npgsqlCommand)
+    + List<object[]> QueryDatabase(INpgsqlCommand npgsqlCommand)
+}
+
+class MTCGDatabaseConnection implements IMTCGDatabaseConnection{
+    - static MTCGDatabaseConnection _mtcgDatabaseConnection
+    - NpgsqlConnection _npgsqlConnection
+
+    + static MTCGDatabaseConnection ReturenMTCGDatabaseConnection()
+}
+class NpgsqlDataReader implements INpgsqlDataReader{
+    - Npgsql.NpgsqlDataReader _npgsqlDataReader
+    + NpgsqlDataReader(Npgsql.NpgsqlDataReader npgsqlDataReader)
+}
+class NpgsqlCommand implements INpgsqlCommand{
+    - Npgsql.NpgsqlCommand _npgsqlCommand
+    + NpsqlCommand(string cmdText)
+}
+
+interface IBattleHistoryRepository{
+    + int Create(User user, EBattleResult battleResult, int pointChange)
+    + BattleHistory Read(int id, User user)
+    + List<BattleHistory> ReadAll(User user)
+}
+
+interface ICardRepository{
+    + List<ACard> LoadCardDeck(User user)
+    + List<ACard> LoadCardStack(User user)
+    + List<ACard> LoadPackage(int packageid)
+    + int CreateMonsterCard(string name, string description,double damage,EElementalType elementalType,EMonsterType monsterType)
+    + int CreateSpellCard(string name, string description,double damage,EElementalType elementalType)
+    + int CreateAreaCard(string name, string description,double damage,EElementalType elementalType, int uses)
+    + int CreateServantCard(string name, string description,double damage,EElementalType elementalType, EServantClass servantClass)
+    + int CreateTrapCard(string name, string description,double damage,EElementalType elementalType, int uses)
+    + int Delete(int id)
+    + ACard Read(int id)
+    + List<ACard> ReadAll()
+}
+
+interface IPackageRepository{
+    + int CreatePackage(List<ACard> cards)
+    + int OpenPackage(User user)
+    + int DeletePackage(int id)
+}
+interface ISessionRepository{
+    + bool Login(string username, string password)
+    + bool CheckIfInValidSession(string username)
+    + bool Logout(string username)
+}
+
+interface ITradingDealRepository{
+    + List<TradingDeal> ReadAll()
+    + TradingDeal Read(int id)
+    + int Create(ACard offeredCard, int requiredCoins, int minDamage, ECardType wantedCardType, User user)
+    + int Delete(int id, User user)
+    + int ConductTrade(TradingDeal tradingDeal, User user, ACard card)
+    + int ConductTrade(TradingDeal tradingDeal, User user)
+    + bool TradePossible(TradingDeal tradingDeal, User user, ACard card)
+    + bool TradePossible(TradingDeal tradingDeal, User user)
+}
+
+interface IUserRepository{
+    + List<TradingDeal> ReadAll()
+    + TradingDeal Read(int id)
+    + int Create(ACard offeredCard, int requiredCoins, int minDamage, ECardType wantedCardType, User user)
+    + int Delete(int id, User user)
+    + int ConductTrade(TradingDeal tradingDeal, User user, ACard card)
+    + int ConductTrade(TradingDeal tradingDeal, User user)
+    + bool TradePossible(TradingDeal tradingDeal, User user, ACard card)
+    + bool TradePossible(TradingDeal tradingDeal, User user)
+}
+
+interface IUserStatsRepository{
+    + List<UserStats> ReadAll()
+    + UserStats Read(User user)
+    + int Update(User user)
+}
+
+class UserRepository implements IUserRepository{
+    - IMTCGDatabaseConnection _mtcgDatabaseConnection
+    - ICardRepository _cardRepository
+    - User ConvertToUser(object[] row)
+    - bool CheckUniquenessOfUsername(string username)
+}
+
+class UserStatsRepository implements IUserStatsRepository{
+    - IUserRepository _userRepository
+    - IMTCGDatabaseConnection _mtcgDatabaseConnection
+    - static int points
+    - UserStats ConvertToUserStats(object[] row)
+}
+
+class TradingDealRepository implements ITradingDealRepository{
+    - MTCGDatabaseConnection _mtcgDatabaseConnection
+    - IUserRepository _userRepository
+    - ICardRepository _cardRepository
+    - TradingDeal ConvertToTradingDeal(object[] row)
+}
+
+class SessionRepository implements ISessionRepository{
+    - IMTCGDatabaseConnection _mtcgDatabaseConnection
+    - IUserRepository _userRepository
+}
+
+class PackageRepository implements IPackageRepository{
+    - IMTCGDatabaseConnection _mtcgDatabaseConnection
+    - ICardRepository _cardRepository
+    - IUserRepository _userRepository
+    - static int packageCosts
+}
+
+class CardRepository implements ICardRepository{
+    - MTCGDatabaseConnection _mtcgDatabaseConnection
+    - ACard ConvertToCard(object[] row)
+    - int CreateBaseCard(string name, string description, double damage, EElementalType elementalType,ECardType cardType)
+}
+class BattleHistoryRepository implements IBattleHistoryRepository{
+    - IMTCGDatabaseConnection _mtcgDatabaseConnection
+    - IUserRepository _userRepository
+    - BattleHistory ConvertToBattleHistory(object[] row, User user)
+}
+
+BattleHistoryRepository *-- IMTCGDatabaseConnection
+CardRepository *-- IMTCGDatabaseConnection
+PackageRepository *-- IMTCGDatabaseConnection
+SessionRepository *-- IMTCGDatabaseConnection
+TradingDealRepository *-- IMTCGDatabaseConnection
+UserRepository *-- IMTCGDatabaseConnection
+UserStatsRepository *-- IMTCGDatabaseConnection
+
+IMTCGDatabaseConnection -- INpgsqlCommand
+IMTCGDatabaseConnection -- INpgsqlDataReader
+
+
+class BaseHTTPServer implements IHTTPServer{
+    + const string VERSION
+    + const string NAME
+    + List<IResourceEndpointHandler> resourceEndpointHandlers
+    - int port
+    - bool running
+    - ITcpListener listener
+    
+
+    + BaseHTTPServer(int port)
+    - void Run()
+}
+
+class RequestContext{
+    + EHTTPVerbs Type {get;set;}
+    + String URL {get;set;}
+    + String HTTPVersion {get;set;}
+    + List<HttpHeaderPair> HeaderPairs {get;private set;}
+    + String Body {get;set;}
+
+    + void AddHeader(String headerLine)
+    + static RequestContext GetBaseRequest(String request)
+    + override string ToString()
+    - RequestContext(String type, String url, String httpVersion)
+}
+
+class HttpHeaderPair{
+    + String HeaderKey {get;set;}
+    + String HeaderValue {get;set;}
+
+    + HttpHeaderPair(String headerKey, String headerValue)
+    + override string ToString()
+}
+
+interface IResourceEndpointHandler{
+    + bool CheckResponsibility(RequestContext requestContext)
+    + ResponseContext HandleRequest(RequestContext requestContext)
+}
+
+class RouteAction{
+     + String PathRegex {get;set;}
+     + Func<RequestContext, ResponseContext> PathAction {get;set;}
+     + EHTTPVerbs RequestType {get;set;}
+
+     + RouteAction(Func<RequestContext, ResponseContext> pathAction, String pathRegex, EHTTPVerbs requestType)
+}
+
+class ResponseContext{
+    + String HTTPVersion {get;set;}
+    + String StatusMessage {get;set}
+    + int StatusCode {get;set}
+    + List<HttpHeaderPair> HeaderPairs {get;private set;}
+    + String Content {get;private set;}
+
+    + static ResponseContext OKResponse()
+    + static ResponseContext CreatedResponse()
+    + static ResponseContext NotFoundResponse()
+    + static ResponseContext BadRequestResponse()
+    + ResponseContext AddHeader(HttpHeaderPair httpHeaderPair)
+    + ResponseContext SetContent(String content, String contentType)
+    + override string ToString()
+    - ResponseContext(String httpVersion, String statusMessage, int statusCode)
+}
+
+interface IHTTPServer{
+    + void Start()
+    + void HandleClient(ITcpClient tcpClient)
+}
+
+
+enum EHTTPVerbs{
+    GET,
+    HEAD,
+    POST,
+    DELETE,
+    PUT,
+    CONNECT,
+    TRACE,
+    PATCH,
+    OPTIONS
+}
+
+interface ITcpClient implements IDisposable{
+    + Stream GetStream()
+    + void Close()
+}
+
+interface ITcpListener{
+    + void Start()
+    + void Stop()
+    + TcpClient AcceptTcpClient()
+}
+
+class TcpClient implements ITcpClient{
+    - readonly System.Net.Sockets.TcpClient _client
+    + TcpClient()
+    + TcpClient(System.Net.Sockets.TcpClient tcpClient)
+}
+
+class TcpListener implements ITcpListener{
+    - readonly System.Net.Sockets.TcpListener _tcpListener;
+    + TcpListener(IPAddress ipAddress, in port)
+}
+
+
+ BaseHTTPServer o-- IResourceEndpointHandler
+ RequestContext o-- HttpHeaderPair
+ ResponseContext o-- HttpHeaderPair
+ BaseHTTPServer ..> ITcpClient
+ BaseHTTPServer o-- ITcpListener
+ ITcpListener ..> ITcpClient
+
+BaseHTTPServer -- RequestContext
+BaseHTTPServer -- ResponseContext
+
+abstract class AEndpointHandler implements IResourceEndpointHandler{
+    # List<RouteAction> RouteActions
+    # string urlBase
+    - RouteAction DetermineRouteAction(RequestContext requestContext)
+}
+
+class BattleEndpointHandler extends AEndpointHandler{
+    - IUserRepository _userRepository
+    - ISessionRepository _sessionRepository
+    - IBattleHistoryRepository _battleHistoryRepository
+    - IUserStatsRepository _userStatsRepository
+    - BattleSystem _battleSystem
+    + ResponseContext BattleHandler(RequestContext requestContext)
+}
+
+class CardsEndpointHandler extends AEndpointHandler{
+    - ISessionRepository _sessionRepository
+    - IUserRepository _userRepository
+    + ResponseContext ReadAllHandler(RequestContext requestContext)
+}
+
+class DeckEndpointHandler extends AEndpointHandler{
+    - IUserRepository _userRepository
+    - ISessionRepository _sessionRepository
+    - ICardRepository _cardRepository
+    + ResponseContext ReadAllHandler(RequestContext requestContext)
+    + ResponseContext UpdateDeckHandler(RequestContext requestContext)
+}
+
+class PackageEndpointHandler extends AEndpointHandler{
+    - ICardRepository _cardRepository
+    - IPackageRepository _packageRepository
+    - ISessionRepository _sessionRepository
+    - IUserRepository _userRepository
+    + ResponseContext CreateHandler(RequestContext requestContext)
+}
+
+class ScoreEndpointHandler extends AEndpointHandler{
+    - IUserRepository _userRepository
+    - ISessionRepository _sessionRepository
+    - IUserStatsRepository _userStatsRepository
+    + ResponseContext ReadAllHandler(RequestContext requestContext)
+}
+
+class SessionEndpointHandler extends AEndpointHandler{
+    - ISessionRepository _sessionRepository
+    + ResponseContext LoginHandler(RequestContext requestContext)
+}
+
+class StatsEndpointHandler extends AEndpointHandler{
+    - IUserRepository _userRepository
+    - ISessionRepository _sessionRepository
+    - IBattleHistoryRepository _battleHistoryRepository
+    + ResponseContext ReadAllForUserHandler(RequestContext requestContext)
+}
+
+class TradingEndpointHandler extends AEndpointHandler{
+    - ISessionRepository _sessionRepository
+    - IUserRepository _userRepository
+    - ICardRepository _cardRepository
+    - ITradingDealRepository _tradingDealRepository
+    + ResponseContext CreateHandler(RequestContext requestContext)
+    + ResponseContext ReadAllHandler(RequestContext requestContext)
+    + ResponseContext DeleteHandler(RequestContext requestContext)
+    + ResponseContext TradeHandler(RequestContext requestContext)
+}
+
+class TransactionEndpointHandler extends AEndpointHandler{
+    - IPackageRepository _packageRepository
+    - ISessionRepository _sessionRepository
+    - IUserRepository _userRepository
+    + ResponseContext OpenPackageHandler(RequestContext requestContext)
+}
+
+class UserEndpointHandler extends AEndpointHandler{
+    - IUserRepository _userRepository
+    - ISessionRepository _sessionRepository
+    + ResponseContext CreateHandler(RequestContext requestContext)
+    + ResponseContext ReadHandler(RequestContext requestContext)
+    + ResponseContext UpdateHandler(RequestContext requestContext)
+}
+
+BattleEndpointHandler *-- BattleSystem
+BattleEndpointHandler *-- IUserStatsRepository
+BattleEndpointHandler *-- IBattleHistoryRepository
+BattleEndpointHandler *-- ISessionRepository
+
+CardsEndpointHandler *-- ISessionRepository
+CardsEndpointHandler *-- IUserRepository
+
+DeckEndpointHandler *-- IUserRepository
+DeckEndpointHandler *-- ISessionRepository
+DeckEndpointHandler *-- ICardsEndpointHandler
+
+PackageEndpointHandler *-- ICardRepository
+PackageEndpointHandler *-- IPackageRepository
+PackageEndpointHandler *-- IUserRepository
+PackageEndpointHandler *-- ISessionRepository
+
+ScoreEndpointHandler *-- ISessionRepository
+ScoreEndpointHandler *-- IUserRepository
+ScoreEndpointHandler *-- IUserStatsRepository
+
+SessionEndpointHandler *-- ISessionRepository
+
+StatsEndpointHandler *-- IUserRepository
+StatsEndpointHandler *-- IBattleHistoryRepository
+StatsEndpointHandler *-- ISessionRepository
+
+TradingEndpointHandler  *-- ISessionRepository
+TradingEndpointHandler *-- ITradingDealRepository
+TradingEndpointHandler *-- IUserRepository
+TradingEndpointHandler *-- ICardRepository
+
+TransactionEndpointHandler *-- ISessionRepository
+TransactionEndpointHandler *-- IPackageRepository
+TransactionEndpointHandler *-- IUserRepository
+
+UserEndpointHandler *-- IUserRepository
+UserEndpointHandler *-- ISessionRepository
+
+@enduml

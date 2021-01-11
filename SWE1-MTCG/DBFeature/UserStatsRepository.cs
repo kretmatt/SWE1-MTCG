@@ -59,7 +59,7 @@ namespace SWE1_MTCG.DBFeature
             if (_userRepository.Read(user.Id)==null)
                 return 0;
             
-            INpgsqlCommand selectUserStatsFromBattleHistoryCommand = new NpsqlCommand("SELECT sum(pointchange), (SELECT count(*) FROM battlehistory WHERE battleresult = @win GROUP BY battleresult), (SELECT count(*) FROM battlehistory WHERE battleresult = @loss GROUP BY battleresult) FROM battlehistory WHERE userid = @userid GROUP BY userid;");
+            INpgsqlCommand selectUserStatsFromBattleHistoryCommand = new NpsqlCommand("SELECT sum(pointchange), (SELECT count(*) FROM battlehistory WHERE battleresult = @win AND userid = @userid GROUP BY battleresult), (SELECT count(*) FROM battlehistory WHERE battleresult = @loss AND userid = @userid GROUP BY battleresult) FROM battlehistory WHERE userid = @userid GROUP BY userid;");
             selectUserStatsFromBattleHistoryCommand.Parameters.AddWithValue("userid", user.Id);
             selectUserStatsFromBattleHistoryCommand.Parameters.AddWithValue("win", EBattleResult.WIN.ToString());
             selectUserStatsFromBattleHistoryCommand.Parameters.AddWithValue("loss", EBattleResult.LOSS.ToString());
@@ -69,10 +69,37 @@ namespace SWE1_MTCG.DBFeature
 
             if (selectUserStatsFromBattleHistory.Count != 1)
                 return 0;
-            
-            int pointchange = Convert.ToInt32(selectUserStatsFromBattleHistory[0][0]);
-            int wins = Convert.ToInt32(selectUserStatsFromBattleHistory[0][1]);
-            int losses = Convert.ToInt32(selectUserStatsFromBattleHistory[0][2]);
+
+            int pointchange = 0;
+            int wins = 0;
+            int losses = 0;
+            try
+            {
+                pointchange = Convert.ToInt32(selectUserStatsFromBattleHistory[0][0]);
+            }
+            catch (Exception e)
+            {
+                pointchange = 0;
+            }
+
+            try
+            {
+                wins = Convert.ToInt32(selectUserStatsFromBattleHistory[0][1]);
+            }
+            catch (Exception e)
+            {
+                wins = 0;
+            }
+
+            try
+            {
+                losses = Convert.ToInt32(selectUserStatsFromBattleHistory[0][2]);
+            }
+            catch (Exception e)
+            {
+                losses = 0;
+            }
+
             double winloseratio;
             int currentPoints = points + pointchange;
             if (currentPoints < 0)

@@ -20,6 +20,9 @@ The class diagram can be broken up into serveral "pieces" of logic.
 * GameLogic
 * WebService-Aspect
 
+
+![Class diagram of the project](./revised_class_diagram_mtcg.svg)
+
 ### DBConnection, Repsoitories, Data transfer objects
 
 Like I said before, this "version" of the project used a database-first approach. In the beginning, I defined the DTOs.

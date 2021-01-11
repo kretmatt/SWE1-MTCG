@@ -251,7 +251,7 @@ curl -X GET http://localhost:10001/users/kienboec --header "Authorization: Basic
 echo.
 curl -X GET http://localhost:10001/users/altenhof --header "Authorization: Basic altenhof-mtcgToken"
 echo.
-curl -X PUT http://localhost:10001/users/kienboec --header "Content-Type: application/json" --header "Authorization: Basic Kienboeck-mtcgToken" -d "{\"Username\": \"Kienboeck\",  \"Bio\": \"me playin...\"}"
+curl -X PUT http://localhost:10001/users/kienboec --header "Content-Type: application/json" --header "Authorization: Basic kienboec-mtcgToken" -d "{\"Username\": \"Kienboeck\",  \"Bio\": \"me playin...\"}"
 echo.
 curl -X PUT http://localhost:10001/users/altenhof --header "Content-Type: application/json" --header "Authorization: Basic altenhof-mtcgToken" -d "{\"Username\": \"Altenhofer\", \"Bio\": \"me codin...\"}"
 echo.

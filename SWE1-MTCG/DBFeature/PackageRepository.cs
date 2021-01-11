@@ -54,13 +54,24 @@ namespace SWE1_MTCG.DBFeature
             if (!_userRepository.CoinsDeductible(packageCosts, user))
                 return 0;
             // Same problem as above, just with the "oldest" package instead.
+
             INpgsqlCommand readAllPackagesCommand = new NpsqlCommand("SELECT min(id) FROM package;");
             List<object[]> readAllPackagesResults = _mtcgDatabaseConnection.QueryDatabase(readAllPackagesCommand);
 
             if (readAllPackagesResults.Count != 1)
                 return 0;
             //FIFO - First in, first out principle for packages
-            int packageId = Convert.ToInt32(readAllPackagesResults[0][0]);
+            //Try catch was added after the submission of the project
+            int packageId = 0;
+            try
+            {
+                packageId = Convert.ToInt32(readAllPackagesResults[0][0]);
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            packageId = Convert.ToInt32(readAllPackagesResults[0][0]);
             INpgsqlCommand readPackageCardsCommand = new NpsqlCommand("SELECT * FROM packagecards WHERE packageid = @packageid;");
             readPackageCardsCommand.Parameters.AddWithValue("packageid", packageId);
 
